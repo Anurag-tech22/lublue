@@ -27,8 +27,6 @@ export function App(): React.JSX.Element {
   const [selectedCategory, setSelectedCategory] = useState<OpportunityCategory>('all');
   const [activeModalMatch, setActiveModalMatch] = useState<MatchResult | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isSyncing, setIsSyncing] = useState(false);
-  const [syncToast, setSyncToast] = useState<string | null>(null);
 
   // Initialize saved grants from localStorage
   const [savedMatches, setSavedMatches] = useState<MatchResult[]>(() => {
@@ -113,31 +111,6 @@ export function App(): React.JSX.Element {
     setSavedMatches((prev) => prev.filter((item) => item.id !== id));
   }, []);
 
-  /** Trigger live Bright Data scraper sync */
-  const handleRefreshScraper = useCallback(async () => {
-    if (isSyncing) return;
-    setIsSyncing(true);
-    setSyncToast('Connecting to Bright Data Scraper Pipeline...');
-
-    try {
-      const res = await fetch('/api/scrape/sync', { method: 'POST' });
-      if (res.ok) {
-        setSyncToast('✅ Scraper pipeline synced: fresh opportunities indexed!');
-      } else {
-        setSyncToast('⚡ Pipeline active: verified 12 live opportunity sources.');
-      }
-    } catch {
-      setSyncToast('⚡ Pipeline active: indexed live grant feeds.');
-    } finally {
-      setTimeout(() => {
-        setIsSyncing(false);
-      }, 1200);
-      setTimeout(() => {
-        setSyncToast(null);
-      }, 4000);
-    }
-  }, [isSyncing]);
-
   /** Filtered matches based on selected category */
   const filteredMatches = useMemo(() => {
     if (selectedCategory === 'all') return matches;
@@ -172,15 +145,7 @@ export function App(): React.JSX.Element {
       <Header
         savedCount={savedMatches.length}
         onOpenSaved={() => setIsDrawerOpen(true)}
-        onRefreshScraper={handleRefreshScraper}
-        isSyncing={isSyncing}
       />
-
-      {syncToast && (
-        <div className="toast-banner" role="status">
-          {syncToast}
-        </div>
-      )}
 
       {viewState === 'idle' && (
         <BioInput onSubmit={handleSubmit} />
