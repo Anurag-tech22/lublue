@@ -1,0 +1,110 @@
+[
+  {
+    "id": "opp-001",
+    "title": "Graduate Research Fellowship Program",
+    "organization": "National Science Foundation",
+    "deadline": "2027-10-21",
+    "description": "Supports outstanding graduate students pursuing research-based master's and doctoral degrees in NSF-supported STEM disciplines. Awards three years of financial support including an annual stipend and cost-of-education allowance.",
+    "url": "https://www.nsfgrfp.org",
+    "tags": ["stem", "graduate", "research", "engineering", "science", "mathematics", "computer science", "biology", "physics", "chemistry"]
+  },
+  {
+    "id": "opp-002",
+    "title": "Global Health Equity Scholars Program",
+    "organization": "Fogarty International Center",
+    "deadline": "2027-03-15",
+    "description": "Provides one-year mentored research training at premier institutions in low- and middle-income countries for graduate students and postdoctoral fellows focused on reducing global health disparities.",
+    "url": "https://www.fic.nih.gov/Programs/Pages/scholars-global-health.aspx",
+    "tags": ["global health", "public health", "epidemiology", "health equity", "postdoctoral", "graduate", "international", "clinical research"]
+  },
+  {
+    "id": "opp-003",
+    "title": "Climate Solutions Accelerator Grant",
+    "organization": "Schmidt Futures",
+    "deadline": "2027-06-30",
+    "description": "Funds early-stage research projects with the potential to significantly reduce greenhouse gas emissions or enhance climate resilience. Open to researchers at any career stage with bold, unconventional approaches.",
+    "url": "https://www.schmidtfutures.com/climate",
+    "tags": ["climate change", "sustainability", "renewable energy", "environmental science", "clean technology", "carbon capture", "early-career", "interdisciplinary"]
+  },
+  {
+    "id": "opp-004",
+    "title": "AI for Social Good Research Awards",
+    "organization": "Google Research",
+    "deadline": "2027-04-01",
+    "description": "Supports academic research applying artificial intelligence and machine learning to pressing social challenges in areas such as healthcare, education, accessibility, and crisis response.",
+    "url": "https://research.google/outreach/ai-for-social-good",
+    "tags": ["artificial intelligence", "machine learning", "deep learning", "social impact", "healthcare", "education", "accessibility", "natural language processing", "computer vision"]
+  },
+  {
+    "id": "opp-005",
+    "title": "Emerging Voices Fellowship",
+    "organization": "Social Science Research Council",
+    "deadline": "2027-01-10",
+    "description": "Supports early-career scholars from underrepresented communities conducting original research in the social sciences and humanities. Fellows receive a stipend, mentoring, and publication support.",
+    "url": "https://www.ssrc.org/fellowships/emerging-voices",
+    "tags": ["social sciences", "humanities", "diversity", "early-career", "sociology", "political science", "anthropology", "history", "qualitative research"]
+  },
+  {
+    "id": "opp-006",
+    "title": "Biomedical Data Science Training Grant",
+    "organization": "National Institutes of Health",
+    "deadline": "2027-05-25",
+    "description": "Supports predoctoral and postdoctoral trainees developing expertise at the intersection of biomedical research and data science, including genomics, bioinformatics, and computational biology.",
+    "url": "https://datascience.nih.gov/training",
+    "tags": ["biomedical", "data science", "bioinformatics", "genomics", "computational biology", "predoctoral", "postdoctoral", "statistics", "machine learning"]
+  },
+  {
+    "id": "opp-007",
+    "title": "Community-Based Participatory Research Award",
+    "organization": "Robert Wood Johnson Foundation",
+    "deadline": "2027-08-15",
+    "description": "Funds collaborative research projects that partner academic researchers with community organizations to address health equity challenges. Emphasizes projects led by or centering communities most affected.",
+    "url": "https://www.rwjf.org/grants",
+    "tags": ["community health", "health equity", "participatory research", "public health", "social determinants", "community engagement", "qualitative research"]
+  },
+  {
+    "id": "opp-008",
+    "title": "Quantum Computing Research Seed Fund",
+    "organization": "IBM Quantum Network",
+    "deadline": "2027-02-28",
+    "description": "Provides seed funding and cloud access to quantum computing resources for university researchers exploring quantum algorithms, error correction, quantum machine learning, and quantum chemistry applications.",
+    "url": "https://www.ibm.com/quantum/network",
+    "tags": ["quantum computing", "physics", "computer science", "algorithms", "quantum mechanics", "mathematics", "computational science", "hardware"]
+  },
+  {
+    "id": "opp-009",
+    "title": "Creative Arts & Technology Innovation Grant",
+    "organization": "MacArthur Foundation",
+    "deadline": "2027-09-01",
+    "description": "Supports artists, designers, and technologists working at the intersection of creative practice and emerging technology. Projects should explore new forms of storytelling, interactive media, or civic engagement through technology.",
+    "url": "https://www.macfound.org/programs/creative-tech",
+    "tags": ["digital arts", "creative technology", "interactive media", "design", "storytelling", "civic engagement", "virtual reality", "augmented reality"]
+  },
+  {
+    "id": "opp-010",
+    "title": "Sustainable Agriculture and Food Systems Fellowship",
+    "organization": "Rockefeller Foundation",
+    "deadline": "2027-07-20",
+    "description": "Supports researchers and practitioners developing innovative approaches to sustainable food production, supply chain resilience, and nutrition security in underserved regions.",
+    "url": "https://www.rockefellerfoundation.org/food",
+    "tags": ["agriculture", "food systems", "sustainability", "nutrition", "food security", "supply chain", "rural development", "environmental science"]
+  },
+  {
+    "id": "opp-011",
+    "title": "Undergraduate STEM Research Experience",
+    "organization": "Howard Hughes Medical Institute",
+    "deadline": "2027-11-15",
+    "description": "Provides stipends and mentorship for undergraduate students from diverse backgrounds to conduct hands-on research in biology, chemistry, and related life sciences at partner institutions.",
+    "url": "https://www.hhmi.org/undergraduate-research",
+    "tags": ["undergraduate", "stem", "biology", "chemistry", "life sciences", "diversity", "mentorship", "laboratory research"]
+  },
+  {
+    "id": "opp-012",
+    "title": "International Peace and Conflict Resolution Research Grant",
+    "organization": "United States Institute of Peace",
+    "deadline": "2027-04-30",
+    "description": "Funds rigorous research on the causes, dynamics, and resolution of violent conflict. Priority areas include peacebuilding, governance, security sector reform, and transitional justice.",
+    "url": "https://www.usip.org/grants",
+    "tags": ["peace studies", "conflict resolution", "international relations", "political science", "governance", "human rights", "security", "policy research"]
+  }
+]
