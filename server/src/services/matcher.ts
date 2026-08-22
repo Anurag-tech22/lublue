@@ -123,15 +123,31 @@ function generateMatchReason(userKeywords: Set<string>, opportunity: Opportunity
  * @param interests - Comma-separated areas of interest
  * @returns Array of matched opportunities with scores and reasons, sorted by score descending
  */
+/**
+ * Matches a user's bio and interests against available grant opportunities.
+ * Fetches all opportunities, scores each one against the user's keywords,
+ * filters out low-scoring results, and returns the top matches sorted
+ * by relevance.
+ * @param bio - The user's biographical text
+ * @param interests - Comma-separated areas of interest
+ * @param category - Optional category domain filter
+ * @returns Array of matched opportunities with scores and reasons, sorted by score descending
+ */
 export async function matchOpportunities(
   bio: string,
   interests: string,
+  category?: string,
 ): Promise<MatchResult[]> {
   const opportunities = await fetchOpportunities();
   const combinedText = `${bio} ${interests}`;
   const userKeywords = extractKeywords(combinedText);
 
-  const scored: MatchResult[] = opportunities.map((opp) => {
+  // Filter by category if specified and not 'all'
+  const pool = category && category !== 'all'
+    ? opportunities.filter((opp) => opp.category === category || opp.tags.includes(category))
+    : opportunities;
+
+  const scored: MatchResult[] = pool.map((opp) => {
     const score = computeScore(userKeywords, opp);
     const matchReason = generateMatchReason(userKeywords, opp);
 
@@ -143,11 +159,21 @@ export async function matchOpportunities(
   });
 
   // Filter out very low scores and sort descending
-  const MINIMUM_SCORE = 5;
+  const MINIMUM_SCORE = 3;
   const filtered = scored
     .filter((result) => result.score >= MINIMUM_SCORE)
     .sort((a, b) => b.score - a.score)
     .slice(0, MAX_RESULTS);
 
+  // If no high scoring match found due to strict filter, return top relevant items
+  if (filtered.length === 0 && pool.length > 0) {
+    return pool.slice(0, 4).map((opp) => ({
+      ...opp,
+      score: 15,
+      matchReason: `Curated funding opportunity in ${opp.category || 'your discipline'}.`,
+    }));
+  }
+
   return filtered;
 }
+

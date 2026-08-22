@@ -1,6 +1,9 @@
 /** Unique identifier for an opportunity */
 export type OpportunityId = string;
 
+/** Category domain for opportunities */
+export type OpportunityCategory = 'all' | 'ai-tech' | 'health-bio' | 'climate' | 'social' | 'fellowship';
+
 /** A funding or grant opportunity */
 export interface Opportunity {
   /** Unique identifier */
@@ -17,6 +20,12 @@ export interface Opportunity {
   url: string;
   /** Keyword tags for matching */
   tags: string[];
+  /** Primary category domain */
+  category?: OpportunityCategory;
+  /** Estimated award amount or funding package */
+  awardAmount?: string;
+  /** Eligibility summary */
+  eligibility?: string;
 }
 
 /** A matched opportunity with relevance scoring */
@@ -39,6 +48,12 @@ export interface MatchResult {
   score: number;
   /** One-line explanation of why this opportunity matched */
   matchReason: string;
+  /** Primary category domain */
+  category?: OpportunityCategory;
+  /** Estimated award amount */
+  awardAmount?: string;
+  /** Eligibility summary */
+  eligibility?: string;
 }
 
 /** Request body for the /api/match endpoint */
@@ -47,12 +62,20 @@ export interface MatchRequest {
   bio: string;
   /** Comma-separated areas of interest */
   interests: string;
+  /** Optional category filter */
+  category?: OpportunityCategory;
 }
 
 /** Successful response from the /api/match endpoint */
 export interface MatchResponse {
   /** Array of matched opportunities, sorted by score descending */
   matches: MatchResult[];
+  /** Metadata on indexing status */
+  meta?: {
+    totalOpportunities: number;
+    lastScraped: string;
+    source: string;
+  };
 }
 
 /** Error response from the /api/match endpoint */

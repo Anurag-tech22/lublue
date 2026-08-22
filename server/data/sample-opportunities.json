@@ -1,12 +1,15 @@
 [
   {
     "id": "opp-001",
-    "title": "Graduate Research Fellowship Program",
+    "title": "Graduate Research Fellowship Program (GRFP)",
     "organization": "National Science Foundation",
     "deadline": "2027-10-21",
     "description": "Supports outstanding graduate students pursuing research-based master's and doctoral degrees in NSF-supported STEM disciplines. Awards three years of financial support including an annual stipend and cost-of-education allowance.",
     "url": "https://www.nsfgrfp.org",
-    "tags": ["stem", "graduate", "research", "engineering", "science", "mathematics", "computer science", "biology", "physics", "chemistry"]
+    "category": "fellowship",
+    "awardAmount": "$37,000 / year + $16,000 tuition",
+    "eligibility": "US Citizens, nationals, or permanent residents pursuing full-time research MS or PhD in STEM fields.",
+    "tags": ["stem", "graduate", "research", "engineering", "science", "mathematics", "computer science", "biology", "physics", "chemistry", "fellowship"]
   },
   {
     "id": "opp-002",
@@ -15,15 +18,21 @@
     "deadline": "2027-03-15",
     "description": "Provides one-year mentored research training at premier institutions in low- and middle-income countries for graduate students and postdoctoral fellows focused on reducing global health disparities.",
     "url": "https://www.fic.nih.gov/Programs/Pages/scholars-global-health.aspx",
+    "category": "health-bio",
+    "awardAmount": "$65,000 stipend + $15,000 research fund",
+    "eligibility": "Postdoctoral fellows and doctoral students in medicine, public health, or biomedical sciences.",
     "tags": ["global health", "public health", "epidemiology", "health equity", "postdoctoral", "graduate", "international", "clinical research"]
   },
   {
     "id": "opp-003",
     "title": "Climate Solutions Accelerator Grant",
-    "organization": "Schmidt Futures",
+    "organization": "Schmidt Futures & Sciences",
     "deadline": "2027-06-30",
     "description": "Funds early-stage research projects with the potential to significantly reduce greenhouse gas emissions or enhance climate resilience. Open to researchers at any career stage with bold, unconventional approaches.",
-    "url": "https://www.schmidtfutures.com/climate",
+    "url": "https://www.schmidtsciences.org/fellowships/",
+    "category": "climate",
+    "awardAmount": "$250,000 - $1,000,000",
+    "eligibility": "Open globally to researchers, university labs, and independent non-profit scientific institutes.",
     "tags": ["climate change", "sustainability", "renewable energy", "environmental science", "clean technology", "carbon capture", "early-career", "interdisciplinary"]
   },
   {
@@ -33,6 +42,9 @@
     "deadline": "2027-04-01",
     "description": "Supports academic research applying artificial intelligence and machine learning to pressing social challenges in areas such as healthcare, education, accessibility, and crisis response.",
     "url": "https://research.google/outreach/ai-for-social-good",
+    "category": "ai-tech",
+    "awardAmount": "$100,000 - $300,000 unrestricted",
+    "eligibility": "Full-time faculty, postdoctoral researchers, and graduate students at accredited academic institutions.",
     "tags": ["artificial intelligence", "machine learning", "deep learning", "social impact", "healthcare", "education", "accessibility", "natural language processing", "computer vision"]
   },
   {
@@ -42,6 +54,9 @@
     "deadline": "2027-01-10",
     "description": "Supports early-career scholars from underrepresented communities conducting original research in the social sciences and humanities. Fellows receive a stipend, mentoring, and publication support.",
     "url": "https://www.ssrc.org/fellowships/emerging-voices",
+    "category": "social",
+    "awardAmount": "$50,000 stipend + $5,000 travel",
+    "eligibility": "Recent PhD graduates (within 3 years) in anthropology, economics, political science, or sociology.",
     "tags": ["social sciences", "humanities", "diversity", "early-career", "sociology", "political science", "anthropology", "history", "qualitative research"]
   },
   {
@@ -51,6 +66,9 @@
     "deadline": "2027-05-25",
     "description": "Supports predoctoral and postdoctoral trainees developing expertise at the intersection of biomedical research and data science, including genomics, bioinformatics, and computational biology.",
     "url": "https://datascience.nih.gov/training",
+    "category": "health-bio",
+    "awardAmount": "$55,000 - $70,000 / year",
+    "eligibility": "Predoctoral students and postdocs conducting bioinformatics, computational biology, or biostatistics research.",
     "tags": ["biomedical", "data science", "bioinformatics", "genomics", "computational biology", "predoctoral", "postdoctoral", "statistics", "machine learning"]
   },
   {
@@ -58,53 +76,71 @@
     "title": "Community-Based Participatory Research Award",
     "organization": "Robert Wood Johnson Foundation",
     "deadline": "2027-08-15",
-    "description": "Funds collaborative research projects that partner academic researchers with community organizations to address health equity challenges. Emphasizes projects led by or centering communities most affected.",
-    "url": "https://www.rwjf.org/grants",
-    "tags": ["community health", "health equity", "participatory research", "public health", "social determinants", "community engagement", "qualitative research"]
+    "description": "Funds research partnerships between academic researchers and community organizations addressing social determinants of health and structural barriers to health equity.",
+    "url": "https://www.rwjf.org/en/grants/funding-opportunities.html",
+    "category": "social",
+    "awardAmount": "$150,000 over 2 years",
+    "eligibility": "Academic-community collaborative teams working on public health and community wellbeing.",
+    "tags": ["public health", "community", "health equity", "participatory research", "social justice", "policy", "social determinants", "nonprofit"]
   },
   {
     "id": "opp-008",
     "title": "Quantum Computing Research Seed Fund",
     "organization": "IBM Quantum Network",
     "deadline": "2027-02-28",
-    "description": "Provides seed funding and cloud access to quantum computing resources for university researchers exploring quantum algorithms, error correction, quantum machine learning, and quantum chemistry applications.",
+    "description": "Provides seed funding and cloud access to IBM quantum processors for academic researchers developing quantum algorithms, error mitigation techniques, or quantum chemistry simulations.",
     "url": "https://www.ibm.com/quantum/network",
-    "tags": ["quantum computing", "physics", "computer science", "algorithms", "quantum mechanics", "mathematics", "computational science", "hardware"]
+    "category": "ai-tech",
+    "awardAmount": "$75,000 + IBM Cloud Quantum compute credits",
+    "eligibility": "Academic researchers, faculty, and PhD candidates working on quantum computation or quantum physics.",
+    "tags": ["quantum computing", "quantum algorithms", "physics", "computer science", "chemistry", "algorithms", "cloud computing", "seed funding"]
   },
   {
     "id": "opp-009",
-    "title": "Creative Arts & Technology Innovation Grant",
-    "organization": "MacArthur Foundation",
-    "deadline": "2027-09-01",
-    "description": "Supports artists, designers, and technologists working at the intersection of creative practice and emerging technology. Projects should explore new forms of storytelling, interactive media, or civic engagement through technology.",
-    "url": "https://www.macfound.org/programs/creative-tech",
-    "tags": ["digital arts", "creative technology", "interactive media", "design", "storytelling", "civic engagement", "virtual reality", "augmented reality"]
+    "title": "International Peace and Conflict Resolution Research Grant",
+    "organization": "United States Institute of Peace",
+    "deadline": "2027-04-30",
+    "description": "Supports policy-relevant research on the prevention, management, and resolution of violent conflict around the world. Encourages interdisciplinary approaches and non-traditional methodologies.",
+    "url": "https://www.usip.org/grants-fellowships",
+    "category": "social",
+    "awardAmount": "$80,000 - $120,000",
+    "eligibility": "Scholars, think-tank analysts, and researchers in international relations, political science, and peace studies.",
+    "tags": ["peace", "conflict resolution", "international relations", "political science", "policy", "security studies", "diplomacy", "governance"]
   },
   {
     "id": "opp-010",
     "title": "Sustainable Agriculture and Food Systems Fellowship",
     "organization": "Rockefeller Foundation",
     "deadline": "2027-07-20",
-    "description": "Supports researchers and practitioners developing innovative approaches to sustainable food production, supply chain resilience, and nutrition security in underserved regions.",
-    "url": "https://www.rockefellerfoundation.org/food",
-    "tags": ["agriculture", "food systems", "sustainability", "nutrition", "food security", "supply chain", "rural development", "environmental science"]
+    "description": "Empowers early- to mid-career researchers advancing regenerative agriculture, food security, and climate-adapted crop development in vulnerable agricultural regions.",
+    "url": "https://www.rockefellerfoundation.org/grants",
+    "category": "climate",
+    "awardAmount": "$125,000 / year (2 years)",
+    "eligibility": "Agronomy, climate science, ecology, and food systems scientists at universities or research centers.",
+    "tags": ["agriculture", "food systems", "sustainability", "climate resilience", "ecology", "nutrition", "international development", "fellowship"]
   },
   {
     "id": "opp-011",
-    "title": "Undergraduate STEM Research Experience",
-    "organization": "Howard Hughes Medical Institute",
-    "deadline": "2027-11-15",
-    "description": "Provides stipends and mentorship for undergraduate students from diverse backgrounds to conduct hands-on research in biology, chemistry, and related life sciences at partner institutions.",
-    "url": "https://www.hhmi.org/undergraduate-research",
-    "tags": ["undergraduate", "stem", "biology", "chemistry", "life sciences", "diversity", "mentorship", "laboratory research"]
+    "title": "MacArthur Fellows Program & Genius Grants",
+    "organization": "John D. and Catherine T. MacArthur Foundation",
+    "deadline": "2027-09-30",
+    "description": "Unrestricted fellowships awarded to exceptionally creative individuals with a track record of achievement and potential for significant future creative work across all fields.",
+    "url": "https://www.macfound.org/programs/fellows/",
+    "category": "fellowship",
+    "awardAmount": "$800,000 no-strings-attached stipend",
+    "eligibility": "Nomination-based for scientists, artists, and innovators showing extraordinary originality and dedication.",
+    "tags": ["fellowship", "interdisciplinary", "innovation", "science", "humanities", "arts", "creative", "unrestricted"]
   },
   {
     "id": "opp-012",
-    "title": "International Peace and Conflict Resolution Research Grant",
-    "organization": "United States Institute of Peace",
-    "deadline": "2027-04-30",
-    "description": "Funds rigorous research on the causes, dynamics, and resolution of violent conflict. Priority areas include peacebuilding, governance, security sector reform, and transitional justice.",
-    "url": "https://www.usip.org/grants",
-    "tags": ["peace studies", "conflict resolution", "international relations", "political science", "governance", "human rights", "security", "policy research"]
+    "title": "Open Society Global Fellowship on Technology & Democracy",
+    "organization": "Open Society Foundations",
+    "deadline": "2027-11-15",
+    "description": "Supports researchers investigating algorithmic accountability, data privacy, surveillance tech, and digital rights in democratic processes.",
+    "url": "https://www.opensocietyfoundations.org/grants",
+    "category": "ai-tech",
+    "awardAmount": "$100,000 stipend + project budget",
+    "eligibility": "Journalists, legal scholars, computer scientists, and civil rights advocates working on tech ethics.",
+    "tags": ["artificial intelligence", "tech ethics", "data privacy", "democracy", "law", "social impact", "policy", "fellowship"]
   }
 ]
