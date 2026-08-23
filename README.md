@@ -13,8 +13,9 @@
 </p>
 
 ### 🔗 Live Production URL: [Lublue — Your Story, Matched to Opportunity](https://lublue.onrender.com/)
+### 🎥 Video Demo: [Watch Hackathon Demo on YouTube](https://youtu.be/hOxwj9xLGHE?si=zZ-Dzen8eS4lxkR8)
 
-[🚀 Live Demo](https://lublue.onrender.com/) &bull; [🏗️ Architecture](#-system-architecture) &bull; [🔥 Bright Data Integration](#-how-i-used-bright-data) &bull; [🛡️ Self-Healing](#-self-healing-scrapers-in-action) &bull; [📑 API Reference](#-api-endpoints)
+[🚀 Live Demo](https://lublue.onrender.com/) &bull; [🎥 Video Demo](https://youtu.be/hOxwj9xLGHE?si=zZ-Dzen8eS4lxkR8) &bull; [🏗️ Architecture](#-system-architecture) &bull; [🔥 Bright Data Integration](#-how-i-used-bright-data) &bull; [🛡️ Self-Healing](#-self-healing-scrapers-in-action) &bull; [📑 API Reference](#-api-endpoints)
 
 </div>
 
