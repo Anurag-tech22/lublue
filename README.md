@@ -266,7 +266,6 @@ Lublue features a bespoke editorial design system built for maximum legibility, 
 - **Typography**: Custom pairing of **Fraunces** (optical-size variable serif for warm, human headlines) and **Inter** (precision sans-serif for metadata and body copy).
 - **Interactive Modals**: Detailed opportunity breakdown showing award amounts, eligibility criteria, and application links.
 - **Saved Grants Drawer**: Bookmarking mechanism with instant `localStorage` persistence and slide-out drawer management.
-- **Real-Time Telemetry Badge**: Expandable live infrastructure badge showing active Bright Data collector IDs, proxy zones, and self-healing status.
 - **Responsive Architecture**: Fluid layout tested across mobile viewports (375px), tablets (768px), and ultra-wide displays (1536px+).
 
 ---
@@ -282,7 +281,7 @@ OpenCall/
 │   │   │   ├── EmptyState.tsx      # Fallback empty state
 │   │   │   ├── ErrorState.tsx      # Graceful network error handling
 │   │   │   ├── FilterBar.tsx       # Domain category selector
-│   │   │   ├── Footer.tsx          # 8-product telemetry badge & socials
+│   │   │   ├── Footer.tsx          # Clean editorial footer & socials
 │   │   │   ├── Header.tsx          # Editorial navigation & saved counter
 │   │   │   ├── Layout.tsx          # Responsive container & footer wrapper
 │   │   │   ├── LoadingSkeleton.tsx # Shimmer loading animation
@@ -347,16 +346,6 @@ npm run dev
 ```
 - **Frontend App**: `http://localhost:5173`
 - **Backend API**: `http://localhost:3001`
-
----
-
-## 🏆 Hackathon Track Alignment
-
-| Track | Prize Target | Why Lublue Wins |
-|---|---|---|
-| **Web-Slinger** | **Grand Prize ($5,000 DGX Supercomputer)** | Integrates **8 Bright Data products** (SERP, Unlocker, Scraping Browser, Collector, Web Scraper API, Browser API CDP, Marketplace, MCP) with self-healing selectors (`bdata scraper heal`) and live in-app scraper synchronization. |
-| **Suit-Up** | **Best UI (Apple iPads)** | World-class editorial typography (Fraunces & Inter), interactive opportunity modals, bookmark drawers, live telemetry indicators, and 100% mobile-responsive layout. |
-| **Spider-Sense** | **Best Clean Code (Keychron Keyboards)** | Strict TypeScript (0 errors), decoupled domain services, zero `any` types, exhaustive documentation, and containerized 1-click reproduction. |
 
 ---
 
