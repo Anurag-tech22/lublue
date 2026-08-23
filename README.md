@@ -319,4 +319,4 @@ As required by **Rule 11** of the Hackathon guidelines:
 
 ## 📄 License
 
-MIT License © 2026 Lublue &bull; Built for the WeMakeDevs &times; Bright Data **Into the Scrape-Verse** Hackathon.
+MIT License © 2026 Lublue
