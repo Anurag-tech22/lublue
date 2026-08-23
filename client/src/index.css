@@ -848,6 +848,107 @@ textarea {
   margin: 0 auto var(--space-32);
 }
 
+.footer__pipeline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-28);
+}
+
+.footer__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: 6px 14px;
+  background: rgba(240, 236, 226, 0.05);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 9999px;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.footer__badge:hover {
+  background: rgba(240, 236, 226, 0.1);
+  border-color: rgba(255, 122, 69, 0.4);
+  color: var(--color-text-primary);
+  transform: translateY(-1px);
+}
+
+.footer__badge-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #52c41a;
+  box-shadow: 0 0 8px rgba(82, 196, 26, 0.8);
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.footer__badge-arrow {
+  font-size: 9px;
+  color: var(--color-text-tertiary);
+  margin-left: 2px;
+}
+
+.footer__pipeline-card {
+  margin-top: var(--space-12);
+  padding: var(--space-16) var(--space-20);
+  background: var(--color-card);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  max-width: 480px;
+  text-align: left;
+}
+
+.footer__pipeline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
+}
+
+.footer__pipeline-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-on-card);
+}
+
+.footer__pipeline-status {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 6px;
+  background: rgba(82, 196, 26, 0.15);
+  color: #52c41a;
+  border-radius: 4px;
+}
+
+.footer__pipeline-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-text-on-card-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer__pipeline-list code {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
 .footer__socials {
   display: flex;
   align-items: center;
@@ -1544,4 +1645,87 @@ textarea {
   font-weight: 600;
   color: var(--color-accent);
 }
+
+/* ── Bright Data Live Sync Button & Toast ───────────────────────────────── */
+.results-top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-24);
+}
+
+.sync-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: 6px 14px;
+  background: rgba(255, 122, 69, 0.12);
+  border: 1px solid rgba(255, 122, 69, 0.3);
+  border-radius: 9999px;
+  color: #ff7a45;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.sync-button:hover:not(:disabled) {
+  background: rgba(255, 122, 69, 0.22);
+  border-color: #ff7a45;
+  color: #ff9c6e;
+  transform: translateY(-1px);
+}
+
+.sync-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.sync-button__icon {
+  font-size: 14px;
+  display: inline-block;
+}
+
+.sync-toast {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding: 10px 20px;
+  background: #111b27;
+  border: 1px solid rgba(255, 122, 69, 0.5);
+  border-radius: 9999px;
+  color: #f0ece2;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+
+.sync-toast__icon {
+  color: #ff7a45;
+  font-size: 16px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translate(-50%, -20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.3s var(--ease-out) forwards;
+}
+
 

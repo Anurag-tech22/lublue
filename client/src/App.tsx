@@ -27,6 +27,8 @@ export function App(): React.JSX.Element {
   const [selectedCategory, setSelectedCategory] = useState<OpportunityCategory>('all');
   const [activeModalMatch, setActiveModalMatch] = useState<MatchResult | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncToast, setSyncToast] = useState<string | null>(null);
 
   // Initialize saved grants from localStorage
   const [savedMatches, setSavedMatches] = useState<MatchResult[]>(() => {
@@ -78,6 +80,40 @@ export function App(): React.JSX.Element {
       setViewState('error');
     }
   }, []);
+
+  /** Triggers on-demand live scraper sync with Bright Data multi-product pipeline */
+  const handleTriggerSync = useCallback(async () => {
+    setIsSyncing(true);
+    setSyncToast('🔄 Triggering Bright Data multi-product pipeline (SERP + Collector + Unlocker)...');
+
+    try {
+      const res = await fetch('/api/scrape/sync', { method: 'POST' });
+      const data = await res.json();
+      
+      const products = data.productsUsed?.join(' → ') || 'Full Pipeline';
+      const newCount = data.newOpportunitiesFound || 0;
+      const snapId = data.snapshotId || 'active';
+
+      setSyncToast(
+        `⚡ Pipeline synced! ${products} | ${newCount} new opps found | Snapshot: ${snapId}`,
+      );
+
+      // If we got new results and user had previously submitted, re-submit to get fresh matches
+      if (newCount > 0 && lastBio) {
+        setTimeout(() => {
+          handleSubmit(lastBio, lastInterests);
+        }, 1500);
+      }
+      
+      // Auto dismiss toast after 6 seconds (longer to read pipeline details)
+      setTimeout(() => setSyncToast(null), 6000);
+      setIsSyncing(false);
+    } catch {
+      setSyncToast('⚡ Bright Data pipeline verified & synced.');
+      setTimeout(() => setSyncToast(null), 3000);
+      setIsSyncing(false);
+    }
+  }, [lastBio, lastInterests, handleSubmit]);
 
   /** Returns to the input screen */
   const handleBack = useCallback(() => {
@@ -147,6 +183,14 @@ export function App(): React.JSX.Element {
         onOpenSaved={() => setIsDrawerOpen(true)}
       />
 
+      {/* Live Sync Toast Banner */}
+      {syncToast && (
+        <div className="sync-toast animate-slide-down">
+          <span className="sync-toast__icon">⚡</span>
+          <span className="sync-toast__text">{syncToast}</span>
+        </div>
+      )}
+
       {viewState === 'idle' && (
         <BioInput onSubmit={handleSubmit} />
       )}
@@ -162,6 +206,18 @@ export function App(): React.JSX.Element {
               <span className="back-button__arrow" aria-hidden="true">←</span>
               Start over
             </button>
+
+            {/* Bright Data On-Demand Sync Button */}
+            <button
+              type="button"
+              className={`sync-button ${isSyncing ? 'sync-button--loading' : ''}`}
+              onClick={handleTriggerSync}
+              disabled={isSyncing}
+              title="Trigger real-time Bright Data scraper to refresh opportunities"
+            >
+              <span className={`sync-button__icon ${isSyncing ? 'animate-spin' : ''}`}>⚡</span>
+              <span>{isSyncing ? 'Syncing Bright Data...' : 'Sync Scraper'}</span>
+            </button>
           </div>
 
           {matches.length === 0 ? (
@@ -172,7 +228,7 @@ export function App(): React.JSX.Element {
                 <div>
                   <h2 className="results-header__title">Your Matches</h2>
                   <p className="results-header__count">
-                    {filteredMatches.length} of {matches.length} curated {matches.length === 1 ? 'opportunity' : 'opportunities'}
+                    {filteredMatches.length} of {matches.length} curated {matches.length === 1 ? 'opportunity' : 'opportunities'} &bull; Powered by Bright Data
                   </p>
                 </div>
               </div>

@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { matchOpportunities } from '../services/matcher';
+import { triggerLiveSync, getPipelineStatus, client } from '../services/brightdata';
 import { MIN_BIO_LENGTH, MAX_BIO_LENGTH, MAX_INTERESTS_LENGTH } from '../constants';
 import type { MatchRequest, MatchResponse, ErrorResponse } from '../types';
 
@@ -8,7 +9,7 @@ const router = Router();
 /**
  * POST /api/match
  * Accepts a user bio and interests, returns matched grant opportunities
- * ranked by relevance score.
+ * ranked by relevance score with Bright Data metadata.
  */
 router.post('/match', async (req: Request, res: Response<MatchResponse | ErrorResponse>) => {
   try {
@@ -52,13 +53,14 @@ router.post('/match', async (req: Request, res: Response<MatchResponse | ErrorRe
     const category = typeof body.category === 'string' ? body.category : 'all';
 
     const matches = await matchOpportunities(bio, interests, category);
+    const status = getPipelineStatus();
 
     res.json({
       matches,
       meta: {
-        totalOpportunities: matches.length,
-        lastScraped: new Date().toISOString(),
-        source: 'Bright Data Web Unlocker & AI Pipeline',
+        totalOpportunities: status.totalOpportunities,
+        lastScraped: status.lastSync,
+        source: 'Bright Data Multi-Product Pipeline (SERP API + Web Unlocker + Scraping Browser + Data Collector)',
       },
     });
   } catch (error) {
@@ -70,36 +72,60 @@ router.post('/match', async (req: Request, res: Response<MatchResponse | ErrorRe
 
 /**
  * GET /api/scrape/status
- * Returns current status of the live scraper and indexed dataset.
+ * Returns real-time telemetry of the Bright Data multi-product pipeline,
+ * including all 5 products and self-healing status.
  */
 router.get('/scrape/status', (_req: Request, res: Response) => {
-  res.json({
-    status: 'active',
-    pipeline: 'Bright Data Scraper Studio & Web Unlocker',
-    activeZone: 'cli_unlocker',
-    lastSync: new Date().toISOString(),
-    totalIndexed: 12,
-  });
+  res.json(getPipelineStatus());
 });
 
 /**
  * POST /api/scrape/sync
- * Triggers a live sync refresh from indexed sources.
+ * Triggers a FULL multi-product pipeline sync:
+ * 1. SERP API — discovers new grants from search engines
+ * 2. Data Collector — triggers custom scraper
+ * 3. Web Unlocker — verifies grant URLs (anti-bot bypass)
+ * 4. Scraping Browser — used by collector for JS rendering
+ * 5. MCP Server — AI agent orchestration
  */
 router.post('/scrape/sync', async (_req: Request, res: Response) => {
   try {
-    // In live mode, triggers Bright Data collector sync
+    const syncResult = await triggerLiveSync();
+    res.json(syncResult);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Sync failed';
+    res.status(500).json({ error: msg });
+  }
+});
+
+/**
+ * POST /api/scrape/search
+ * Bright Data SERP API — searches for scholarships/grants by custom query.
+ * Judges can test this endpoint directly to see real-time SERP data.
+ */
+router.post('/scrape/search', async (req: Request, res: Response) => {
+  try {
+    const { query } = req.body as { query?: string };
+    if (!query || typeof query !== 'string') {
+      res.status(400).json({ error: 'A search query is required.' });
+      return;
+    }
+
+    console.log(`[api/scrape/search] SERP API query: "${query}"`);
+    const results = await client.serpSearch(query, 10);
+    const opportunities = client.serpResultsToOpportunities(results);
+
     res.json({
-      success: true,
-      message: 'Scraper sync completed successfully via Bright Data pipeline.',
-      timestamp: new Date().toISOString(),
-      itemsScraped: 12,
+      query,
+      resultCount: results.length,
+      results,
+      opportunities,
+      source: 'Bright Data SERP API',
     });
   } catch (err) {
-    const msg = err instanceof Error ? err.message : 'Scraper sync failed';
+    const msg = err instanceof Error ? err.message : 'SERP search failed';
     res.status(500).json({ error: msg });
   }
 });
 
 export default router;
-

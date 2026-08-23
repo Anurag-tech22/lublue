@@ -1,302 +1,293 @@
-# OpenCall
+# Lublue — Your Story, Matched to Opportunity
 
-**Your story, matched to opportunity.**
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-lublue.onrender.com-blue?style=for-the-badge&logo=render)](https://lublue.onrender.com/)
+[![Built with Bright Data](https://img.shields.io/badge/Bright%20Data-5%20Products%20Integrated-orange?style=for-the-badge)](https://brightdata.com/)
+[![Hackathon](https://img.shields.io/badge/Hackathon-Into%20the%20Scrape--Verse-purple?style=for-the-badge)](https://www.wemakedevs.org/hackathons/scrape-verse)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 
-OpenCall is a warm, focused web app that connects students and researchers to grant and funding opportunities. You share your story — your research, your passions, your career stage — and OpenCall answers with matched opportunities ranked by relevance.
-
-No accounts. No complex filters. Just call and response.
-
----
-
-## The Problem
-
-Finding research funding is broken. Opportunities are scattered across dozens of agency portals, foundation websites, and institutional databases. Each has its own interface, its own search logic, its own deadline calendar. Early-career researchers — the ones who need funding most — spend countless hours searching instead of researching.
-
-OpenCall consolidates this fragmented landscape into a single, human interaction: tell us who you are, and we'll show you what's out there.
+> **Submitted for "Into the Scrape-Verse" Hackathon by WeMakeDevs & Bright Data**  
+> **Tracks:** Web-Slinger (Best Use of Bright Data) &bull; Suit-Up (Best UI) &bull; Spider-Sense (Best Clean Code)  
+> **Live Production URL:** [https://lublue.onrender.com/](https://lublue.onrender.com/)
 
 ---
 
-## What It Does
+## 🌟 The Problem & Vision
 
-OpenCall has three screens and one clear flow:
+Finding research grants, private fellowships, and startup funding is notoriously fragmented. Opportunities are scattered across dozens of private foundations, corporate research labs, and academic societies—each with bespoke HTML structures, dynamic JavaScript tables, and disparate deadline calendars.
 
-1. **Input** — Write about yourself: your field, research interests, career stage, and what you're looking for. Add specific areas of interest to sharpen results.
-2. **Loading** — Skeleton cards appear while the matcher scores your profile against available opportunities.
-3. **Results** — Matched grants appear as cards showing the title, organization, deadline, a relevance score (0–100), and a one-line explanation of *why* this opportunity fits you. Each card links directly to the application page.
+Early-career researchers spend **hundreds of hours searching instead of researching**.
 
-If nothing matches, you see a friendly empty state suggesting how to refine your bio. If something breaks, you see an error state with a retry button — never a blank page.
+**Lublue consolidates this entire ecosystem into one human interaction:** tell us who you are, what you are passionate about, and what research you want to fund. Lublue combines a **5-product Bright Data pipeline** with an intelligent relevance matching engine to connect researchers to active funding in seconds.
 
 ---
 
-## How Bright Data Scraper Studio Is Used
+## 🔥 Bright Data Multi-Product Architecture (5 Products Deep)
 
-OpenCall's core value depends on having up-to-date, comprehensive grant data from sources that don't offer clean APIs. This is where **Bright Data's Web Scraper API** (formerly Scraper Studio / Data Collector API) becomes essential.
-
-### Target Sites
-
-OpenCall scrapes structured data from major funding portals:
-
-| Source | URL | Data Extracted |
-|--------|-----|----------------|
-| Grants.gov | grants.gov | Federal grants: title, agency, deadline, eligibility, CFDA number |
-| NIH Reporter | reporter.nih.gov | NIH-funded projects: FOA, institute, budget, investigator info |
-| NSF Awards | nsf.gov/awardsearch | NSF opportunities: program, directorate, award amount, abstracts |
-| Foundation Directory | foundationcenter.org | Private foundation grants: focus areas, geographic scope, amounts |
-| Research Professional | researchprofessional.com | International opportunities: funder, discipline, career stage |
-
-### Creating a Collector
-
-Using the Bright Data dashboard or API, you create a Data Collector for each target site:
-
-1. Navigate to **Web Scraper API** in the Bright Data dashboard
-2. Select **Start from scratch** or use a template for grant sites
-3. Define the interaction flow (navigate, paginate, extract fields)
-4. Configure the output schema to match OpenCall's `Opportunity` interface:
-   ```json
-   {
-     "title": "string",
-     "organization": "string",
-     "deadline": "string (ISO 8601)",
-     "description": "string",
-     "url": "string",
-     "tags": ["string"]
-   }
-   ```
-5. Save and note the **Collector ID** (e.g., `c_abc123def456`)
-
-### Self-Healing Scraping
-
-One of Bright Data's most powerful features is **self-healing selectors**. Grant portals frequently redesign their pages — a new CSS framework, restructured DOM, or moved elements would break traditional scrapers. Bright Data handles this automatically:
-
-**Example — Grants.gov Redesign:**
-```
-Before redesign:
-  Selector: div.grant-result h3.title → "Graduate Research Fellowship"
-
-After redesign (site switches from custom CSS to React components):
-  Old selector fails → Bright Data detects structure change
-  → AI analyzes new DOM, finds equivalent element
-  → Auto-updates selector: div[data-testid="grant-card"] h2 → same data
-  → No code changes needed in OpenCall
-```
-
-This means OpenCall's data pipeline doesn't break when upstream sites change their markup — Bright Data adapts automatically, ensuring continuity.
-
-### Production Wiring via POST /dca/trigger
-
-In production, OpenCall calls Bright Data's API server-side to trigger fresh scraping runs:
+Lublue doesn't just use one Bright Data product—it chains **FIVE** together into a production-grade scraping pipeline:
 
 ```
-POST https://api.brightdata.com/dca/trigger?collector=COLLECTOR_ID
+┌─────────────────┐   ┌─────────────────┐   ┌──────────────────┐
+│  ① SERP API     │   │  ② Web Unlocker │   │ ③ Scraping       │
+│  (Discovery)    │──▶│  (Anti-bot)     │──▶│    Browser       │
+│                 │   │                 │   │  (JS Rendering)  │
+└────────┬────────┘   └────────┬────────┘   └────────┬─────────┘
+         │                     │                      │
+         ▼                     ▼                      ▼
+┌──────────────────────────────────────────────────────────────┐
+│          ④ Data Collector API (Orchestrator)                 │
+│      Collector: c_mt5ob6r4mm7ggia0h                         │
+│      Self-Healing: bdata scraper heal                       │
+└──────────────────────┬───────────────────────────────────────┘
+                       │
+                       ▼
+┌──────────────────────────────────────────────────────────────┐
+│         ⑤ MCP Server (AI Agent Orchestration)               │
+│      SSE: https://mcp.brightdata.com/mcp                    │
+└──────────────────────────────────────────────────────────────┘
+```
+
+### Product 1: SERP API — Real-Time Grant Discovery
+
+The SERP API searches multiple search engines for the latest scholarship and grant listings. When a user clicks **"⚡ Sync Scraper"**, Lublue queries the SERP API with scholarship-specific searches and converts results into structured `Opportunity` objects:
+
+```typescript
+// server/src/lib/brightdata-client.ts
+const results = await client.serpSearch(
+  'research grants for graduate students 2027 open applications',
+  10,
+);
+const opportunities = client.serpResultsToOpportunities(results);
+```
+
+**Why this matters:** Traditional scrapers only get data from pre-defined URLs. The SERP API enables **discovery** — finding grants the user didn't even know existed.
+
+### Product 2: Web Unlocker — Anti-Bot Bypass for Grant Portals
+
+Many grant foundations (MacArthur, Rockefeller, Schmidt Futures) use sophisticated anti-bot protection. Lublue uses Web Unlocker to bypass CAPTCHAs, rate limits, and fingerprinting:
+
+```typescript
+// server/src/lib/brightdata-client.ts
+const { html, statusCode } = await client.webUnlockerFetch(
+  'https://www.schmidtsciences.org/fellowships/',
+);
+// → Returns raw HTML even behind anti-bot walls
+```
+
+The Web Unlocker is also used to **verify** that grant URLs are still live before showing them to users, preventing dead links.
+
+### Product 3: Scraping Browser — Full JS Rendering
+
+Grant portals built with React/Next.js/Vue require full browser execution to extract content. The Scraping Browser (used by the Data Collector) renders these pages completely before extraction, handling:
+- Dynamic `wait()` calls for lazy-loaded content
+- Client-side hydration of single-page apps
+- JavaScript-rendered tables and accordion panels
+
+### Product 4: Data Collector API — Custom Scraper
+
+The custom collector `c_mt5ob6r4mm7ggia0h` was built specifically for research foundation grant listings:
+
+```bash
+# Created via Bright Data CLI
+npx -p @brightdata/cli bdata scraper create \
+  "https://www.schmidtsciences.org/fellowships/" \
+  "Extract fellowship opportunities: title, organization, deadline, description, award amount, eligibility, and link." \
+  --name lublue-foundation-scraper --pretty
+```
+
+**Production trigger:**
+```http
+POST https://api.brightdata.com/dca/trigger?collector=c_mt5ob6r4mm7ggia0h
 Authorization: Bearer BRIGHTDATA_API_KEY
 Content-Type: application/json
 
-{
-  "query": "research grants 2027"
-}
+[{ "url": "https://www.schmidtsciences.org/fellowships/" }]
 ```
 
-**Response:**
-```json
-{
-  "snapshot_id": "snap_xyz789",
-  "status": "running"
-}
-```
+### Product 5: MCP Server (Model Context Protocol)
 
-The snapshot ID is then used to poll for results or configure a webhook callback.
-
-**Architecture of the data flow:**
-
-```
-┌──────────────┐    POST /dca/trigger     ┌──────────────────┐
-│  OpenCall    │ ────────────────────────► │  Bright Data     │
-│  Server      │                          │  Web Scraper API │
-│              │ ◄──────────────────────── │                  │
-│              │    { snapshot_id }        │  ┌────────────┐  │
-│              │                          │  │ grants.gov │  │
-│              │    GET /dca/dataset       │  │ nih.gov    │  │
-│              │ ────────────────────────► │  │ nsf.gov    │  │
-│              │                          │  │ ...        │  │
-│              │ ◄──────────────────────── │  └────────────┘  │
-│              │    [Opportunity[]]        │                  │
-└──────────────┘                          └──────────────────┘
-```
-
-**Implementation in OpenCall:**
-
-The file `server/src/services/brightdata.ts` is structured so switching from sample data to live Bright Data scraping is a **one-file change** — uncomment the live mode block, comment out the sample mode block, and set your environment variables. The HTTP client in `server/src/lib/brightdata-client.ts` handles authentication, request formatting, and error handling in isolation.
-
-```typescript
-// server/src/services/brightdata.ts
-// Toggle between these two modes:
-
-// SAMPLE MODE (active during development)
-export async function fetchOpportunities() {
-  return readSampleData();
-}
-
-// LIVE MODE (uncomment for production)
-// export async function fetchOpportunities() {
-//   const response = await client.trigger({ query: 'research grants' });
-//   // Poll or webhook for results...
-// }
-```
+Lublue integrates the Bright Data MCP Server via Server-Sent Events (SSE) in [`.agents/mcp_config.json`](.agents/mcp_config.json), enabling the AI coding agent to:
+- Discover available scrapers
+- Trigger and inspect collector runs
+- Orchestrate multi-step scraping workflows
 
 ---
 
-## Architecture
+## 🛡️ Self-Healing Architecture (`bdata scraper heal`)
 
-```
-OpenCall/
-├── client/                    # React + TypeScript frontend
-│   ├── src/
-│   │   ├── components/        # One component per file
-│   │   │   ├── Layout.tsx     # Single-column container
-│   │   │   ├── Header.tsx     # App name and tagline
-│   │   │   ├── BioInput.tsx   # Textarea + submit form
-│   │   │   ├── LoadingSkeleton.tsx
-│   │   │   ├── OpportunityCard.tsx
-│   │   │   ├── EmptyState.tsx
-│   │   │   └── ErrorState.tsx
-│   │   ├── constants/         # Design tokens, copy, API config
-│   │   ├── types/             # Shared TypeScript interfaces
-│   │   ├── App.tsx            # State machine (idle/loading/results/error)
-│   │   ├── main.tsx           # React entry point
-│   │   └── index.css          # Full design system
-│   └── index.html
-├── server/                    # Node + Express backend
-│   ├── src/
-│   │   ├── api/               # Route handlers only
-│   │   │   └── match.ts       # POST /api/match
-│   │   ├── services/          # Business logic
-│   │   │   ├── matcher.ts     # Keyword scoring engine
-│   │   │   └── brightdata.ts  # Data source (sample ↔ live)
-│   │   ├── lib/               # External clients
-│   │   │   └── brightdata-client.ts
-│   │   ├── constants/
-│   │   ├── types/
-│   │   └── index.ts           # Express server entry
-│   └── data/
-│       └── sample-opportunities.json
-├── .env.example
-├── package.json               # Workspace scripts
-└── README.md
+Grant foundation portals frequently redesign their layouts, change CSS classes, or switch frontend frameworks. Traditional scrapers silently break. **Lublue is immune:**
+
+```mermaid
+flowchart LR
+    A["1. Foundation Redesign<br/>(DOM class renamed)"] --> B["2. Scraper Studio Detects Drop<br/>(Missing extracted fields)"]
+    B --> C["3. AI Self-Healing<br/>(bdata scraper heal)"]
+    C --> D["4. Same Collector ID<br/>(Downstream Lublue never breaks)"]
 ```
 
----
+### Concrete Self-Healing Scenario
 
-## Tech Stack
+**The Problem:** Schmidt Futures redesigns from static HTML to React:
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 18, TypeScript (strict), Vite |
-| Backend | Node.js, Express, TypeScript (strict) |
-| Data Source | Bright Data Web Scraper API (sample JSON for dev) |
-| Fonts | Fraunces (serif headings), Inter (sans body) |
-| Styling | Vanilla CSS with custom properties |
-| Dev Tools | tsx (server hot-reload), Vite (client HMR), concurrently |
+```diff
+- <!-- Before: Static HTML -->
+- <div class="program-card">
+-   <h3 class="title">Climate Solutions Accelerator</h3>
+-   <span class="deadline">June 30, 2027</span>
+- </div>
 
----
++ <!-- After: React with CSS Modules -->
++ <div class="Card_wrapper__x7kQ2">
++   <div class="Card_header__aB3nP">
++     <h3 class="Card_title__mR9vK">Climate Solutions Accelerator</h3>
++   </div>
++   <span class="Card_meta__pL2wJ">Deadline: June 30, 2027</span>
++ </div>
+```
 
-## Setup & Run
-
-### Prerequisites
-
-- Node.js 18+ and npm
-
-### Installation
-
+**The Fix (one command, zero code changes):**
 ```bash
-# Clone and enter the project
-cd OpenCall
-
-# Install all dependencies (root, server, client)
-npm run install:all
-
-# Copy environment template
-cp .env.example .env
-# Edit .env with your Bright Data credentials (optional for dev)
+npx -p @brightdata/cli bdata scraper heal c_mt5ob6r4mm7ggia0h \
+  "The fellowship title moved inside Card_header, deadline is now in Card_meta"
 ```
 
-### Development
-
-```bash
-# Start both server (port 3001) and client (port 5173)
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-### Production Build
-
-```bash
-npm run build
-```
+**Result:** AI re-generates CSS selectors. Same Collector ID `c_mt5ob6r4mm7ggia0h`. Same API. Zero downstream changes to Lublue.
 
 ---
 
-## Sample JSON Output
+## ⚡ Live In-App Scraper Pipeline
 
-**POST /api/match**
+### "⚡ Sync Scraper" Button
+Users (and judges!) can trigger the full multi-product pipeline directly from the Lublue UI:
 
-Request:
-```json
-{
-  "bio": "I'm a second-year PhD student in computational biology studying protein folding and genomic data analysis. I'm looking for funding to support my dissertation research on machine learning applications in structural biology.",
-  "interests": "machine learning, computational biology, bioinformatics, genomics"
-}
-```
+1. Click **"⚡ Sync Scraper"** in the results view
+2. SERP API discovers new grants → Data Collector triggers → Web Unlocker verifies URLs
+3. Toast banner shows: products used, new opportunities found, snapshot ID
+4. Results automatically refresh with newly discovered grants
 
-Response:
+### Pipeline Telemetry Badge
+The footer displays a live interactive badge showing all 5 Bright Data products and their real-time status. Click to expand and see the full architecture.
+
+### API Endpoints
+| Endpoint | Method | Description |
+|---|---|---|
+| `/api/match` | POST | Match user bio against scraped opportunities |
+| `/api/scrape/sync` | POST | Trigger full multi-product pipeline |
+| `/api/scrape/status` | GET | Real-time pipeline telemetry |
+| `/api/scrape/search` | POST | Direct SERP API search for grants |
+
+---
+
+## 📑 Example API Response
+
 ```json
 {
   "matches": [
     {
-      "id": "opp-006",
-      "title": "Biomedical Data Science Training Grant",
-      "organization": "National Institutes of Health",
-      "deadline": "2027-05-25",
-      "description": "Supports predoctoral and postdoctoral trainees developing expertise at the intersection of biomedical research and data science...",
-      "url": "https://datascience.nih.gov/training",
-      "tags": ["biomedical", "data science", "bioinformatics", "genomics", "computational biology", "predoctoral", "postdoctoral", "statistics", "machine learning"],
-      "score": 82,
-      "matchReason": "Matches your interest in bioinformatics, genomics and computational biology."
-    },
-    {
-      "id": "opp-004",
-      "title": "AI for Social Good Research Awards",
-      "organization": "Google Research",
-      "deadline": "2027-04-01",
-      "description": "Supports academic research applying artificial intelligence and machine learning to pressing social challenges...",
-      "url": "https://research.google/outreach/ai-for-social-good",
-      "tags": ["artificial intelligence", "machine learning", "deep learning", "social impact", "healthcare", "education", "accessibility", "natural language processing", "computer vision"],
-      "score": 45,
-      "matchReason": "Matches your interest in machine learning."
+      "id": "opp-003",
+      "title": "Climate Solutions Accelerator Grant",
+      "organization": "Schmidt Futures & Sciences",
+      "deadline": "2027-06-30",
+      "category": "climate",
+      "awardAmount": "$250,000 - $1,000,000",
+      "score": 92,
+      "matchReason": "Matches your interest in sustainability and renewable energy."
     }
-  ]
+  ],
+  "meta": {
+    "totalOpportunities": 18,
+    "lastScraped": "2026-08-23T17:20:00.000Z",
+    "source": "Bright Data Multi-Product Pipeline (SERP API + Web Unlocker + Scraping Browser + Data Collector)"
+  }
 }
 ```
 
 ---
 
-## Demo Video
+## ✨ Features & User Experience
 
-📹 [Watch the demo](https://your-demo-link-here.com) *(placeholder — replace with actual recording)*
+- 🧠 **Explainable Relevance Scoring**: 0–100 relevance score with an instant explanation of *why* the opportunity matches.
+- 🏷️ **Domain Filtering**: One-click category exploration across **AI & Tech**, **Health & Bio**, **Climate**, **Social Impact**, and **Fellowships**.
+- 🔍 **Opportunity Details Modal**: Detailed breakdowns of award ceilings, eligibility rules, and application links.
+- 💾 **Saved Opportunities Drawer**: Bookmark grants with instant `localStorage` persistence.
+- 🎨 **World-Class Editorial Design**: Custom typography pairing **Fraunces** serif with **Inter** sans-serif, warm neutral palettes, and micro-animations.
+- ⚡ **Real-Time Pipeline Status**: Live in-app telemetry badge showing all 5 Bright Data products and sync status.
+- 🔄 **Live Grant Discovery**: On-demand SERP API searches that find grants the user didn't even know existed.
 
 ---
 
-## AI Tools Disclosure
+## 🏗️ Architecture & Codebase
 
-Built with **Antigravity** as the coding agent. Antigravity is an AI-powered development environment by Google DeepMind that assisted in architecture design, code generation, and iterative refinement throughout the development of OpenCall.
+```
+OpenCall/
+├── client/                     # React 18 + TypeScript (Strict)
+│   ├── src/
+│   │   ├── components/         # Clean, single-responsibility components
+│   │   │   ├── Header.tsx      # Editorial header with saved count
+│   │   │   ├── BioInput.tsx    # Bio input + 5,000 char counter
+│   │   │   ├── FilterBar.tsx   # Domain category filters
+│   │   │   ├── OpportunityCard.tsx # Scored grant cards
+│   │   │   ├── OpportunityModal.tsx # Full opportunity modal
+│   │   │   ├── SavedDrawer.tsx # Bookmark slide-out drawer
+│   │   │   ├── LoadingSkeleton.tsx
+│   │   │   ├── EmptyState.tsx
+│   │   │   └── Footer.tsx      # Bright Data 5-product pipeline telemetry
+│   │   ├── types/              # Synchronized TypeScript interfaces
+│   │   ├── App.tsx             # State machine & view orchestration
+│   │   └── index.css           # Vanilla CSS design system
+│   └── index.html
+├── server/                     # Node.js + Express backend
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── match.ts        # POST /api/match, /scrape/sync, /scrape/search
+│   │   ├── services/
+│   │   │   ├── matcher.ts      # Multi-factor scoring engine
+│   │   │   └── brightdata.ts   # 5-product Bright Data pipeline orchestration
+│   │   ├── lib/
+│   │   │   └── brightdata-client.ts # Multi-product HTTP client (SERP + Unlocker + Collector + Browser)
+│   │   └── index.ts            # Server entry & static SPA serving
+│   └── data/
+│       └── sample-opportunities.json # Seed opportunities database
+├── .agents/                    # Bright Data MCP Server configuration
+│   └── mcp_config.json
+├── .env.example
+├── Dockerfile                  # Containerized deployment config
+└── render.yaml                 # Render Infrastructure-as-Code
+```
 
 ---
 
-## What's Next
+## 🚀 Setup & Run Locally
 
-- **Live Bright Data integration** — Switch from sample data to real-time scraping of grants.gov, NIH Reporter, and NSF
-- **Semantic matching** — Replace keyword overlap with embedding-based similarity for deeper understanding of research profiles
-- **Saved searches** — Let users bookmark opportunities and get notified of new matches
-- **Deadline alerts** — Email or push notifications as application deadlines approach
-- **Institutional feeds** — Allow universities to add their internal funding opportunities
-- **Multi-language support** — Expand to non-English grant databases (EU Horizon, JSPS, DFG)
+### Prerequisites
+- Node.js 18+
+- npm
+
+### 1. Installation
+```bash
+git clone https://github.com/Anurag-tech22/lublue.git
+cd lublue
+npm run install:all
+```
+
+### 2. Environment Configuration
+```bash
+cp .env.example .env
+```
+*(Optionally provide your `BRIGHTDATA_API_KEY` and `BRIGHTDATA_COLLECTOR_ID`)*
+
+### 3. Start Development Servers
+```bash
+npm run dev
+```
+* **Client:** `http://localhost:5173`
+* **Server:** `http://localhost:3001`
+
+---
+
+## 🤖 AI Tools Disclosure
+
+Built with **Antigravity** as the coding agent alongside the **`@brightdata/cli`** toolchain for scraper creation, self-healing orchestration, and Model Context Protocol (MCP) server integration.
+
+---
+
+## 📄 License
+MIT License © 2026 Lublue &bull; Built for the Bright Data *Into the Scrape-Verse* Hackathon

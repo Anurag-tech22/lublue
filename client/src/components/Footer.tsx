@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 /**
  * SVG social media icons — 20×20, stroke-based, matching the design system.
@@ -72,13 +72,48 @@ const socialLinks: SocialLink[] = [
 ];
 
 /**
- * Site footer with social media links.
- * Clean row of icon links with accessible labels.
+ * Site footer with social media links & Bright Data Hackathon attribution badge.
  */
 export function Footer(): React.JSX.Element {
+  const [showDetails, setShowDetails] = useState(false);
+
   return (
     <footer className="footer">
       <div className="footer__separator" aria-hidden="true" />
+      
+      {/* Bright Data Multi-Product Pipeline Attribution Badge */}
+      <div className="footer__pipeline">
+        <button
+          type="button"
+          className="footer__badge"
+          onClick={() => setShowDetails(!showDetails)}
+          title="Click to view Bright Data multi-product pipeline architecture"
+        >
+          <span className="footer__badge-pulse" />
+          <span className="footer__badge-text">
+            Powered by <strong>Bright Data</strong> — 5 Products Integrated
+          </span>
+          <span className="footer__badge-arrow">{showDetails ? '▲' : '▼'}</span>
+        </button>
+
+        {showDetails && (
+          <div className="footer__pipeline-card animate-fade-in">
+            <div className="footer__pipeline-header">
+              <span className="footer__pipeline-title">Bright Data Multi-Product Architecture</span>
+              <span className="footer__pipeline-status">Active</span>
+            </div>
+            <ul className="footer__pipeline-list">
+              <li><strong>1. SERP API:</strong> Real-time scholarship discovery from search engines</li>
+              <li><strong>2. Web Unlocker:</strong> Anti-bot bypass for grant portal access</li>
+              <li><strong>3. Scraping Browser:</strong> Full JS rendering for dynamic pages</li>
+              <li><strong>4. Data Collector API:</strong> Collector <code>c_mt5ob6r4mm7ggia0h</code></li>
+              <li><strong>5. MCP Server (SSE):</strong> AI agent ↔ Bright Data orchestration</li>
+              <li><strong>Self-Healing:</strong> <code>bdata scraper heal</code> — AI DOM selector regeneration</li>
+            </ul>
+          </div>
+        )}
+      </div>
+
       <nav className="footer__socials" aria-label="Social media links">
         {socialLinks.map((link) => (
           <a
@@ -93,7 +128,7 @@ export function Footer(): React.JSX.Element {
           </a>
         ))}
       </nav>
-      <p className="footer__copy">&copy; {new Date().getFullYear()} Lublue</p>
+      <p className="footer__copy">&copy; {new Date().getFullYear()} Lublue &bull; Built for the Bright Data Hackathon</p>
     </footer>
   );
 }
