@@ -1,67 +1,60 @@
-<div align="center">
+# Lublue — Your Story, Matched to Opportunity
 
-# 🎓 Lublue — Your Story, Matched to Opportunity
+[![Live Production](https://img.shields.io/badge/Production-lublue.onrender.com-0052FF?style=flat-square&logo=render&logoColor=white)](https://lublue.onrender.com/)
+[![Video Demo](https://img.shields.io/badge/Demo-YouTube-red?style=flat-square&logo=youtube&logoColor=white)](https://youtu.be/hOxwj9xLGHE?si=zZ-Dzen8eS4lxkR8)
+[![Bright Data](https://img.shields.io/badge/Bright%20Data-8%20Products%20Integrated-orange?style=flat-square)](https://brightdata.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0%20Strict-blue?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)](LICENSE)
 
-**An intelligent academic funding discovery platform powered by Bright Data's multi-product web scraping suite, AI self-healing selectors, and explainable semantic matching.**
-
-<br/>
-
-[![Live Production](https://img.shields.io/badge/🚀%20Live%20App-lublue.onrender.com-0052FF?style=for-the-badge&logo=render&logoColor=white)](https://lublue.onrender.com/)
-[![Video Demo](https://img.shields.io/badge/🎥%20Video%20Demo-YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/hOxwj9xLGHE?si=zZ-Dzen8eS4lxkR8)
-[![Bright Data](https://img.shields.io/badge/Bright%20Data-8%20Products%20Integrated-FF7A45?style=for-the-badge&logo=databricks&logoColor=white)](https://brightdata.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0%20Strict-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
-
-<br/><br/>
-
-### [🌐 Launch Live Application](https://lublue.onrender.com/) &nbsp;&bull;&nbsp; [▶️ Watch Demo on YouTube](https://youtu.be/hOxwj9xLGHE?si=zZ-Dzen8eS4lxkR8)
-
-<br/>
-
-[📸 Screenshots](#-application-screenshots) &bull; [🏗️ Architecture](#-system-architecture) &bull; [🔥 Bright Data Integration](#-how-i-used-bright-data--solved-real-scraping-challenges) &bull; [🛡️ Self-Healing](#-self-healing-scrapers-in-action) &bull; [📑 API Reference](#-api-endpoints) &bull; [🚀 Quick Start](#-getting-started-locally)
-
-</div>
+An intelligent academic funding discovery platform powered by Bright Data's multi-product web scraping suite, AI self-healing selectors, and explainable semantic matching.
 
 ---
 
-## 💡 Why I Built Lublue
+### Quick Links
+- **Live Application:** [lublue.onrender.com](https://lublue.onrender.com/)
+- **Video Walkthrough:** [Watch on YouTube](https://youtu.be/hOxwj9xLGHE?si=zZ-Dzen8eS4lxkR8)
+- **Navigation:** [Overview](#overview) &bull; [Architecture](#system-architecture) &bull; [Bright Data Integration](#bright-data-integration) &bull; [Self-Healing Engine](#self-healing-scrapers-in-action) &bull; [Screenshots](#application-screenshots) &bull; [API Reference](#api-endpoints) &bull; [Local Setup](#getting-started-locally)
 
-As a student and developer, I know how frustrating it is to find research grants and academic fellowships. Opportunities are scattered across dozens of different foundation websites. Each site has its own layout, complex dynamic JavaScript tables, and unstandardized deadline formats. Most researchers waste days searching instead of doing their actual research.
+---
 
-**I built Lublue to make funding discovery simple:**
-1. You describe your background, career stage, and what research you want to fund.
-2. The backend uses an **8-product Bright Data web scraping engine** to extract and verify live grant opportunities from philanthropic portals and search engines.
-3. The matching engine scores each grant from 0 to 100 and explains *why* it matches your profile, providing deadlines, award amounts, and direct application links in under 50 milliseconds.
+## Overview
+
+Finding academic research grants and fellowships is traditionally inefficient. Opportunities are fragmented across dozens of independent foundation portals with disparate layouts, dynamic JavaScript rendering, and unstandardized deadline formats.
+
+**Lublue streamlines the discovery pipeline:**
+1. **Researcher Profiling:** The researcher submits an unstructured summary of their field of study, career stage, and funding requirements.
+2. **Multi-Source Scraping:** The backend orchestrates an **8-product Bright Data web scraping engine** to extract and verify active grant calls from philanthropic foundations and live search results.
+3. **Explainable Matching:** A high-speed relevance algorithm computes keyword overlap and domain alignment, returning ranked matches (0–100 score) with award amounts, deadlines, and direct application links in under 50ms.
 
 ```mermaid
 graph LR
-    A["👤 Researcher Bio & Interests"] --> B["🧠 Relevance Matching Engine"]
-    C["🌐 Bright Data 8-Product Hub<br/>(SERP, Unlocker, Browser, Collector)"] --> B
-    B --> D["✨ Scored & Ranked Grants"]
-    D --> E["📑 Details Modal & Saved Drawer"]
+    A["Researcher Profile"] --> B["Relevance Matching Engine"]
+    C["Bright Data 8-Product Hub<br/>(SERP, Unlocker, Browser, Collector)"] --> B
+    B --> D["Scored & Ranked Opportunities"]
+    D --> E["Opportunity Modal & Saved Drawer"]
 ```
 
 ---
 
-## 🛠️ How I Used Bright Data & Solved Real Scraping Challenges
+## Bright Data Integration
 
-During this hackathon, I built a production-grade scraping pipeline using **8 Bright Data products** to solve the hardest problems in web data collection:
+During development, an 8-product Bright Data infrastructure was implemented to resolve core web data extraction challenges:
 
 ```mermaid
 flowchart TB
-    subgraph Challenges ["🚨 Real-World Web Scraping Challenges"]
-        C1["1. React SPAs & Dynamic Hydration<br/>(Empty &lt;div id='root'&gt; shells)"]
-        C2["2. Anti-Bot Blocks & CAPTCHAs<br/>(403 Forbidden on Foundation Portals)"]
-        C3["3. Discovering Unindexed Grants<br/>(Hardcoded URLs miss new calls)"]
+    subgraph Challenges ["Web Data Extraction Challenges"]
+        C1["1. React SPAs & Dynamic Hydration<br/>(Empty root containers)"]
+        C2["2. Anti-Bot Systems & Rate Limiting<br/>(403 Forbidden on Foundation Portals)"]
+        C3["3. Unindexed / Rolling Grant Calls<br/>(Static URL lists become stale)"]
         C4["4. Upstream DOM Layout Redesigns<br/>(Broken CSS selectors & silent failures)"]
-        C5["5. Coding Agent Scraper Control<br/>(Need seamless AI tool orchestration)"]
+        C5["5. Coding Agent Orchestration<br/>(AI tool protocol compatibility)"]
     end
 
-    subgraph Solutions ["✅ Bright Data Solutions in Lublue"]
+    subgraph Solutions ["Bright Data Solutions"]
         S1["Scraping Browser & Browser Worker<br/>Full JS execution & wait_for hydration"]
         S2["Web Unlocker (cli_unlocker)<br/>Automated TLS fingerprinting & CAPTCHA solving"]
         S3["SERP API (POST /serp/req)<br/>Real-time Google/Bing grant discovery + NLP parser"]
-        S4["Scraper Studio (bdata scraper heal)<br/>Autonomous AI selector repair with same Collector ID"]
+        S4["Scraper Studio (bdata scraper heal)<br/>Autonomous AI selector repair with fixed Collector ID"]
         S5["Model Context Protocol (MCP SSE)<br/>Native coding agent integration in .agents/mcp_config.json"]
     end
 
@@ -72,51 +65,51 @@ flowchart TB
     C5 ==> S5
 ```
 
-### 1. Dynamic JavaScript Rendering (React Single-Page Apps)
-* **Problem:** Foundation portals like Schmidt Sciences render grant tables with client-side React. Standard HTTP scrapers only see empty HTML shells (`<div id="root"></div>`).
-* **Solution:** I used a **Browser Worker** in **Scraper Studio** and the **Scraping Browser**. The cloud browser waits for DOM hydration (`wait('h1', { timeout: 30000 })`) before extracting structured records.
+### 1. Dynamic JavaScript Rendering (React Single-Page Applications)
+* **Challenge:** Foundation directories (e.g., Schmidt Sciences) render listings dynamically via client-side React. Standard HTTP requests return unpopulated container elements (`<div id="root"></div>`).
+* **Solution:** Configured a **Browser Worker** in **Scraper Studio** and utilized the **Scraping Browser**. The cloud headless browser executes client-side scripts and waits for explicit selector hydration (`wait('h1', { timeout: 30000 })`) prior to data extraction.
 
-### 2. Bypassing Bot Detection on Foundation Portals
-* **Problem:** Portals like Rockefeller and MacArthur protect their directories with Cloudflare bot mitigation, blocking automated requests with 403s or CAPTCHAs.
-* **Solution:** I routed requests through **Bright Data Web Unlocker** (`POST /request`). It automatically rotates residential IPs, handles TLS fingerprinting, and solves CAPTCHAs in the background.
+### 2. Anti-Bot Bypass on Foundation Portals
+* **Challenge:** Portals such as Rockefeller Foundation and MacArthur Foundation enforce Cloudflare bot protection, blocking direct automated requests.
+* **Solution:** Routed requests through the **Bright Data Web Unlocker** (`POST /request`). The service manages IP rotation, TLS fingerprinting, and automatic CAPTCHA solving without custom proxy logic.
 
-### 3. Real-Time Discovery Across Search Engines
-* **Problem:** Scraping a static list of URLs misses newly announced funding calls.
-* **Solution:** I connected the **SERP API** (`client.serpSearch()`) to query Google and Bing for live grant calls (e.g., `"STEM fellowship 2027 open application"`), parsing results into structured `Opportunity` objects.
+### 3. Real-Time Search Engine Discovery
+* **Challenge:** Pre-configured URL lists miss newly announced calls and rolling fellowship deadlines.
+* **Solution:** Integrated the **SERP API** (`client.serpSearch()`) to query Google and Bing programmatically (e.g., `"STEM fellowship 2027 application"`), converting search snippets into normalized `Opportunity` records.
 
-### 4. Self-Healing Broken Scrapers
-* **Problem:** Websites frequently change CSS classes or redesign their layout, breaking scrapers silently.
-* **Solution:** I used **`bdata scraper heal`**. Instead of manually rewriting code, one terminal command prompts AI to analyze the new DOM and repair the selectors with zero downtime.
+### 4. Resilient Self-Healing Selectors
+* **Challenge:** Layout redesigns and CSS module class renames break scrapers without throwing immediate runtime errors.
+* **Solution:** Deployed **`bdata scraper heal`** from `@brightdata/cli`. When DOM structures mutate, AI re-evaluates the target tree and updates the selector definitions automatically while preserving the Collector ID.
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 ```mermaid
 flowchart TB
-    subgraph Client ["🖥️ Frontend (React 18 + Vite + TypeScript)"]
-        UI["Editorial UI (Fraunces & Inter)"]
-        BioForm["Bio & Interests Form"]
-        Cards["Scored Opportunity Cards"]
-        Modal["Grant Details Modal"]
+    subgraph Client ["Client Layer (React 18 + Vite + TypeScript)"]
+        UI["Design System (Fraunces & Inter)"]
+        BioForm["Profile Input & Validation"]
+        Cards["Ranked Opportunity Cards"]
+        Modal["Opportunity Details Modal"]
         Drawer["Saved Grants Drawer (LocalStorage)"]
     end
 
-    subgraph Server ["⚙️ Express Backend API"]
-        Router["API Router (/api)"]
+    subgraph Server ["Server Layer (Node.js + Express + TypeScript)"]
+        Router["API Gateway (/api)"]
         Matcher["Relevance Scoring Engine"]
         BDService["Bright Data Service Hub"]
         BDClient["BrightDataClient HTTP Client"]
     end
 
-    subgraph BrightData ["☁️ Bright Data Cloud Infrastructure"]
-        SERP["1. SERP API (Live Discovery)"]
+    subgraph BrightData ["Bright Data Cloud Infrastructure"]
+        SERP["1. SERP API (Discovery)"]
         Unlocker["2. Web Unlocker (Anti-Bot Bypass)"]
         Browser["3. Scraping Browser (JS Hydration)"]
         Collector["4. Data Collector (c_mt5ob6r4mm7ggia0h)"]
-        WebScraper["5. Web Scraper API (Domain Templates)"]
-        BrowserAPI["6. Browser API (Cloud CDP Sessions)"]
-        Marketplace["7. Dataset Marketplace (Pre-indexed)"]
+        WebScraper["5. Web Scraper API (Domain Scrapers)"]
+        BrowserAPI["6. Browser API (Cloud CDP)"]
+        Marketplace["7. Dataset Marketplace (Catalogs)"]
         MCP["8. Model Context Protocol (SSE Bridge)"]
     end
 
@@ -130,48 +123,46 @@ flowchart TB
 
 ---
 
-## 🛡️ Self-Healing Scrapers in Action
-
-When a foundation portal updates its layout or migrates from static HTML to React:
+## Self-Healing Scrapers in Action
 
 ```mermaid
 sequenceDiagram
     autonumber
-    participant Portal as Foundation Website
+    participant Portal as Foundation Portal
     participant Studio as Bright Data Scraper Studio
     participant Dev as Developer / CLI
     participant App as Lublue Backend
 
-    Note over Portal,App: 1. Normal Extraction
+    Note over Portal,App: 1. Standard Extraction
     App->>Studio: POST /dca/trigger (Collector c_mt5ob6r4mm7ggia0h)
-    Studio->>Portal: Scrapes grant cards using current selectors
+    Studio->>Portal: Scrapes records using active selectors
     Studio-->>App: Returns structured JSON
 
-    Note over Portal,App: 2. Foundation Redesigns Layout
-    Portal->>Portal: CSS classes renamed from .program-card to .Card_wrapper
-    Studio-->>App: Scraper Studio detects missing fields
+    Note over Portal,App: 2. Upstream Layout Modification
+    Portal->>Portal: CSS classes renamed (.program-card to .Card_wrapper)
+    Studio-->>App: Scraper Studio identifies missing field payloads
 
-    Note over Portal,App: 3. Instant AI Repair
+    Note over Portal,App: 3. Autonomous AI Repair
     Dev->>Studio: npx -p @brightdata/cli bdata scraper heal c_mt5ob6r4mm7ggia0h "Title moved to h3.Card_title"
-    Studio->>Portal: Analyzes new DOM and updates selectors
-    Studio-->>Dev: Scraper healed! (Same Collector ID c_mt5ob6r4mm7ggia0h)
+    Studio->>Portal: Analyzes new DOM and updates selector mappings
+    Studio-->>Dev: Scraper healed (Same Collector ID c_mt5ob6r4mm7ggia0h)
 
-    Note over Portal,App: 4. Seamless Resumption
+    Note over Portal,App: 4. Seamless Operation
     App->>Studio: POST /dca/trigger (c_mt5ob6r4mm7ggia0h)
-    Studio-->>App: Full structured records flowing again with zero code changes
+    Studio-->>App: Complete structured records restored
 ```
 
-### Before & After DOM Diff Example:
+### Selector Migration Example:
 
 ```diff
-- <!-- Old HTML Structure -->
+- <!-- Legacy Markup -->
 - <div class="program-card">
 -   <h3 class="title">Climate Solutions Accelerator</h3>
 -   <span class="deadline">June 30, 2027</span>
 -   <span class="amount">$250,000 - $1,000,000</span>
 - </div>
 
-+ <!-- New React Component Redesign -->
++ <!-- Updated Component Structure -->
 + <div class="Card_wrapper__x7kQ2">
 +   <div class="Card_header__aB3nP">
 +     <h3 class="Card_title__mR9vK">Climate Solutions Accelerator</h3>
@@ -183,7 +174,7 @@ sequenceDiagram
 + </div>
 ```
 
-**The One-Line Repair Command:**
+**CLI Execution:**
 ```bash
 npx -p @brightdata/cli bdata scraper heal c_mt5ob6r4mm7ggia0h \
   "Title is now in h3.Card_title, deadline and award are in Card_meta"
@@ -191,18 +182,30 @@ npx -p @brightdata/cli bdata scraper heal c_mt5ob6r4mm7ggia0h \
 
 ---
 
-## 📑 API Endpoints
+## Application Screenshots
+
+| Profile Input & Matching | Ranked Results Grid |
+|:---:|:---:|
+| <img src="docs/screenshots/01-bio-input-form.png" alt="Profile Input Form" width="460"/> | <img src="docs/screenshots/02-matched-opportunities.png" alt="Ranked Matches" width="460"/> |
+
+| Opportunity Details Modal |
+|:---:|
+| <img src="docs/screenshots/03-opportunity-details-modal.png" alt="Opportunity Details Modal" width="460"/> |
+
+---
+
+## API Endpoints
 
 | Method | Endpoint | Description |
 |---|---|---|
-| `POST` | `/api/match` | Matches user bio against all live & cached grant opportunities |
+| `POST` | `/api/match` | Matches researcher profile against live and cached funding opportunities |
 | `POST` | `/api/scrape/sync` | Triggers the 8-product discovery and collection pipeline |
-| `GET` | `/api/scrape/status` | Returns live telemetry on active Bright Data collectors and zones |
-| `POST` | `/api/scrape/search` | Direct keyword search via the Bright Data SERP API |
-| `GET` | `/api/scrape/marketplace` | Searches pre-indexed education & grant datasets |
-| `POST` | `/api/scrape/unlock` | Tests Web Unlocker anti-bot bypass on any given URL |
+| `GET` | `/api/scrape/status` | Returns live telemetry on active collectors, proxy zones, and cache health |
+| `POST` | `/api/scrape/search` | Direct keyword search via Bright Data SERP API |
+| `GET` | `/api/scrape/marketplace` | Queries pre-indexed education and grant datasets |
+| `POST` | `/api/scrape/unlock` | Tests Web Unlocker anti-bot bypass on a specified URL |
 
-### Sample Match Response (`POST /api/match`)
+### Sample Response (`POST /api/match`)
 
 ```json
 {
@@ -225,123 +228,94 @@ npx -p @brightdata/cli bdata scraper heal c_mt5ob6r4mm7ggia0h \
   "meta": {
     "totalOpportunities": 22,
     "lastScraped": "2026-08-23T18:14:00.000Z",
-    "source": "Bright Data 8-Product Pipeline (SERP + Unlocker + Scraping Browser + Collector + Web Scraper + Browser API + Marketplace + MCP)"
+    "source": "Bright Data 8-Product Pipeline"
   }
 }
 ```
 
 ---
 
-## 🎨 UI & User Experience
-
-- **Custom Typography**: Pairing **Fraunces** serif (warm, human headlines) with **Inter** sans-serif (clean metadata and body text).
-- **Opportunity Details Modal**: Shows complete award breakdowns, eligibility criteria, and application links.
-- **Saved Grants Drawer**: Bookmarks opportunities with instant `localStorage` persistence.
-- **Category Filters**: Instant filtering across **AI & Tech**, **Health & Bio**, **Climate**, **Social Impact**, and **Fellowships**.
-- **Responsive Layout**: Designed and tested across mobile, tablet, and desktop screens.
-
----
-
-## 📸 Application Screenshots
-
-<div align="center">
-
-### 1. Researcher Bio & Areas of Interest Matching Form
-<img src="docs/screenshots/01-bio-input-form.png" alt="Bio & Areas of Interest Input Form" width="850"/>
-
-<br/><br/>
-
-### 2. Ranked Matches & Real-Time Relevance Scores
-<img src="docs/screenshots/02-matched-opportunities.png" alt="Matched Opportunities Grid with Relevance Badges" width="850"/>
-
-<br/><br/>
-
-### 3. Opportunity Details Modal & Direct Application
-<img src="docs/screenshots/03-opportunity-details-modal.png" alt="Opportunity Details Modal with Award and Eligibility" width="850"/>
-
-</div>
-
----
-
-## 📂 Project Structure
+## Project Structure
 
 ```
 OpenCall/
-├── client/                         # React 18 + Vite + TypeScript
+├── client/                         # React 18 + Vite + TypeScript Frontend
 │   ├── src/
-│   │   ├── components/             # Clean UI components
-│   │   │   ├── BioInput.tsx        # Bio form & char counter
-│   │   │   ├── FilterBar.tsx       # Domain category filter pills
-│   │   │   ├── OpportunityCard.tsx # Grant cards with relevance score badges
-│   │   │   ├── OpportunityModal.tsx# Details modal with application links
-│   │   │   ├── SavedDrawer.tsx     # Bookmarked grants slide-out drawer
-│   │   │   ├── LoadingSkeleton.tsx # Shimmer loading animation
-│   │   │   ├── Header.tsx          # Header with saved grant counter
-│   │   │   └── Footer.tsx          # Clean footer with socials
-│   │   ├── types/                  # TypeScript data interfaces
-│   │   ├── App.tsx                 # Main application state machine
+│   │   ├── components/             # Modular UI components
+│   │   │   ├── BioInput.tsx        # Profile form with character validation
+│   │   │   ├── FilterBar.tsx       # Domain category filter controls
+│   │   │   ├── OpportunityCard.tsx # Opportunity card with relevance scoring
+│   │   │   ├── OpportunityModal.tsx# Detailed grant view with external actions
+│   │   │   ├── SavedDrawer.tsx     # Bookmarked grants drawer (LocalStorage)
+│   │   │   ├── LoadingSkeleton.tsx # Shimmer loading placeholder
+│   │   │   ├── Header.tsx          # Application header & telemetry status
+│   │   │   └── Footer.tsx          # Minimalist footer
+│   │   ├── types/                  # TypeScript interface contracts
+│   │   ├── App.tsx                 # Main application state controller
 │   │   └── index.css               # Vanilla CSS design system
-├── server/                         # Express Backend API
+├── server/                         # Express API Backend
 │   ├── src/
 │   │   ├── api/
-│   │   │   └── match.ts            # Express route handlers
+│   │   │   └── match.ts            # REST route controllers
 │   │   ├── lib/
-│   │   │   └── brightdata-client.ts# Bright Data 8-product HTTP wrapper
+│   │   │   └── brightdata-client.ts# 8-product Bright Data HTTP client wrapper
 │   │   ├── services/
-│   │   │   ├── brightdata.ts       # Pipeline orchestration & caching
-│   │   │   └── matcher.ts          # Semantic keyword scoring algorithm
-│   │   └── index.ts                # Server entry point
+│   │   │   ├── brightdata.ts       # Pipeline orchestration & memory cache
+│   │   │   └── matcher.ts          # Relevance scoring & keyword parser
+│   │   └── index.ts                # Server bootstrap & static hosting
 │   └── data/
 │       └── sample-opportunities.json# Seed grant catalog
 ├── .agents/                        # Bright Data Model Context Protocol
 │   └── mcp_config.json             # MCP server SSE configuration
-├── Dockerfile                      # Production container configuration
-├── render.yaml                     # Render deployment configuration
-└── README.md                       # Documentation
+├── docs/                           # Documentation & screenshots
+│   └── screenshots/
+├── Dockerfile                      # Production container recipe
+├── render.yaml                     # Infrastructure configuration
+└── README.md                       # Repository documentation
 ```
 
 ---
 
-## 🚀 Getting Started Locally
+## Getting Started Locally
 
 ### Prerequisites
-- Node.js 18+
-- npm
+- Node.js 18.0.0 or higher
+- npm 9.0.0 or higher
 
-### 1. Clone & Install
+### 1. Clone & Install Dependencies
 ```bash
 git clone https://github.com/Anurag-tech22/lublue.git
 cd lublue
 npm run install:all
 ```
 
-### 2. Configure Environment
+### 2. Configure Environment Variables
 ```bash
 cp .env.example .env
 ```
-Add your Bright Data credentials:
+Populate `.env` with your Bright Data credentials:
 ```ini
 BRIGHTDATA_API_KEY=your_api_key_here
 BRIGHTDATA_COLLECTOR_ID=c_mt5ob6r4mm7ggia0h
 ```
 
-### 3. Start Development Server
+### 3. Launch Development Environment
 ```bash
 npm run dev
 ```
-* **Frontend:** `http://localhost:5173`
-* **Backend:** `http://localhost:3001`
+* **Client:** `http://localhost:5173`
+* **Server:** `http://localhost:3001`
 
 ---
 
-## 🤖 AI Tools Disclosure
+## AI Tools Disclosure
 
 As required by **Rule 11** of the Hackathon guidelines:
-- **AI Coding Assistant**: Built with the assistance of **Antigravity** as the AI pair programmer alongside the **`@brightdata/cli`** toolchain for scraper creation, Model Context Protocol (MCP) configuration, and self-healing selector testing.
-- **Human Verification**: All code architecture, TypeScript types, endpoint routing, relevance matching algorithms, and UI design were directed, verified, and debugged by the author.
+- **AI Coding Assistant:** Built with the assistance of **Antigravity** as the AI pair programmer alongside the **`@brightdata/cli`** toolchain for scraper creation, Model Context Protocol (MCP) configuration, and self-healing selector testing.
+- **Human Verification:** All code architecture, TypeScript types, endpoint routing, relevance matching algorithms, and UI design were directed, verified, and debugged by the author.
 
 ---
 
-## 📄 License
+## License
 
 MIT License © 2026 Lublue
