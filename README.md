@@ -407,6 +407,14 @@ npm run dev
 
 ---
 
+## 🤖 AI Tools & Coding Assistant Disclosure
+
+As required by **Rule 11** of the Hackathon guidelines:
+- **AI Coding Assistant**: Built with the assistance of **Antigravity** as the AI pair programmer alongside the **`@brightdata/cli`** toolset for scraper creation, Model Context Protocol (MCP) server configuration, and self-healing selector testing.
+- **Human Verification**: All code architecture, TypeScript types, endpoint routing, relevance matching algorithms, and UI components were designed, verified, and debugged by the author.
+
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details. Built for the WeMakeDevs &times; Bright Data **Into the Scrape-Verse** Hackathon (August 2026).
