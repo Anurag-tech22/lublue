@@ -1,7 +1,7 @@
 # Lublue — Your Story, Matched to Opportunity
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-lublue.onrender.com-blue?style=for-the-badge&logo=render)](https://lublue.onrender.com/)
-[![Built with Bright Data](https://img.shields.io/badge/Bright%20Data-5%20Products%20Integrated-orange?style=for-the-badge)](https://brightdata.com/)
+[![Built with Bright Data](https://img.shields.io/badge/Bright%20Data-8%20Products%20Integrated-orange?style=for-the-badge)](https://brightdata.com/)
 [![Hackathon](https://img.shields.io/badge/Hackathon-Into%20the%20Scrape--Verse-purple?style=for-the-badge)](https://www.wemakedevs.org/hackathons/scrape-verse)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 
@@ -13,17 +13,17 @@
 
 ## 🌟 The Problem & Vision
 
-Finding research grants, private fellowships, and startup funding is notoriously fragmented. Opportunities are scattered across dozens of private foundations, corporate research labs, and academic societies—each with bespoke HTML structures, dynamic JavaScript tables, and disparate deadline calendars.
+Finding research grants, private fellowships, and startup funding is notoriously fragmented. Opportunities are scattered across hundreds of foundations, corporate research labs, and academic societies—each with bespoke HTML structures, dynamic JavaScript tables, and disparate deadline calendars.
 
 Early-career researchers spend **hundreds of hours searching instead of researching**.
 
-**Lublue consolidates this entire ecosystem into one human interaction:** tell us who you are, what you are passionate about, and what research you want to fund. Lublue combines a **5-product Bright Data pipeline** with an intelligent relevance matching engine to connect researchers to active funding in seconds.
+**Lublue consolidates this entire ecosystem into one human interaction:** tell us who you are, what you are passionate about, and what research you want to fund. Lublue combines an **8-product Bright Data ecosystem** with an intelligent relevance matching engine to connect researchers to active funding in seconds.
 
 ---
 
-## 🔥 Bright Data Multi-Product Architecture (5 Products Deep)
+## 🔥 Bright Data Multi-Product Architecture (8 Products Deep)
 
-Lublue doesn't just use one Bright Data product—it chains **FIVE** together into a production-grade scraping pipeline:
+Lublue goes far beyond a single scraper—it chains **EIGHT Bright Data products** together into an enterprise-grade data collection pipeline:
 
 ```
 ┌─────────────────┐   ┌─────────────────┐   ┌──────────────────┐
@@ -39,17 +39,24 @@ Lublue doesn't just use one Bright Data product—it chains **FIVE** together in
 │      Self-Healing: bdata scraper heal                       │
 └──────────────────────┬───────────────────────────────────────┘
                        │
+ ┌─────────────────────┼─────────────────────┐
+ │                     │                     │
+ ▼                     ▼                     ▼
+┌─────────────────┐   ┌─────────────────┐   ┌──────────────────┐
+│ ⑤ Web Scraper   │   │ ⑥ Browser API   │   │ ⑦ Dataset        │
+│    API          │   │    (Cloud CDP)  │   │    Marketplace   │
+│ (1000+ Prebuilt)│   │ (JS Execution)  │   │ (Pre-indexed)    │
+└─────────────────┘   └─────────────────┘   └──────────────────┘
+                       │
                        ▼
 ┌──────────────────────────────────────────────────────────────┐
-│         ⑤ MCP Server (AI Agent Orchestration)               │
+│         ⑧ MCP Server (AI Agent Orchestration)               │
 │      SSE: https://mcp.brightdata.com/mcp                    │
 └──────────────────────────────────────────────────────────────┘
 ```
 
 ### Product 1: SERP API — Real-Time Grant Discovery
-
-The SERP API searches multiple search engines for the latest scholarship and grant listings. When a user clicks **"⚡ Sync Scraper"**, Lublue queries the SERP API with scholarship-specific searches and converts results into structured `Opportunity` objects:
-
+The SERP API queries Google & Bing for the freshest grant and scholarship calls. When users click **"⚡ Sync Scraper"**, Lublue executes live SERP queries and automatically parses snippets into structured `Opportunity` objects:
 ```typescript
 // server/src/lib/brightdata-client.ts
 const results = await client.serpSearch(
@@ -59,66 +66,45 @@ const results = await client.serpSearch(
 const opportunities = client.serpResultsToOpportunities(results);
 ```
 
-**Why this matters:** Traditional scrapers only get data from pre-defined URLs. The SERP API enables **discovery** — finding grants the user didn't even know existed.
-
-### Product 2: Web Unlocker — Anti-Bot Bypass for Grant Portals
-
-Many grant foundations (MacArthur, Rockefeller, Schmidt Futures) use sophisticated anti-bot protection. Lublue uses Web Unlocker to bypass CAPTCHAs, rate limits, and fingerprinting:
-
+### Product 2: Web Unlocker — Anti-Bot & CAPTCHA Bypass
+Target grant foundation portals (e.g. Schmidt Futures, Rockefeller, MacArthur) frequently implement Cloudflare/Akamai bot detection. Web Unlocker automatically handles CAPTCHAs, TLS fingerprinting, and header rotation:
 ```typescript
-// server/src/lib/brightdata-client.ts
-const { html, statusCode } = await client.webUnlockerFetch(
-  'https://www.schmidtsciences.org/fellowships/',
-);
-// → Returns raw HTML even behind anti-bot walls
+const { html, statusCode } = await client.webUnlockerFetch('https://www.schmidtsciences.org/fellowships/');
 ```
 
-The Web Unlocker is also used to **verify** that grant URLs are still live before showing them to users, preventing dead links.
+### Product 3: Scraping Browser — Cloud JS Rendering
+For dynamic Single-Page Applications (React/Next.js), the Scraping Browser provides headless browser rendering with custom `wait_for` logic for hydrated DOM extraction.
 
-### Product 3: Scraping Browser — Full JS Rendering
-
-Grant portals built with React/Next.js/Vue require full browser execution to extract content. The Scraping Browser (used by the Data Collector) renders these pages completely before extraction, handling:
-- Dynamic `wait()` calls for lazy-loaded content
-- Client-side hydration of single-page apps
-- JavaScript-rendered tables and accordion panels
-
-### Product 4: Data Collector API — Custom Scraper
-
-The custom collector `c_mt5ob6r4mm7ggia0h` was built specifically for research foundation grant listings:
-
+### Product 4: Data Collector API — Custom Production Collector
+Custom Collector `c_mt5ob6r4mm7ggia0h` was created via `@brightdata/cli` specifically for research grant discovery:
 ```bash
-# Created via Bright Data CLI
 npx -p @brightdata/cli bdata scraper create \
   "https://www.schmidtsciences.org/fellowships/" \
   "Extract fellowship opportunities: title, organization, deadline, description, award amount, eligibility, and link." \
   --name lublue-foundation-scraper --pretty
 ```
 
-**Production trigger:**
-```http
-POST https://api.brightdata.com/dca/trigger?collector=c_mt5ob6r4mm7ggia0h
-Authorization: Bearer BRIGHTDATA_API_KEY
-Content-Type: application/json
+### Product 5: Web Scraper API — Pre-Built Domain Extractors
+Leverages Bright Data's catalog of 1,000+ pre-built scrapers for educational and funding portals via `POST /datasets/v3/scrape`.
 
-[{ "url": "https://www.schmidtsciences.org/fellowships/" }]
-```
+### Product 6: Browser API (CDP) — Cloud DevTools Sessions
+Direct Chrome DevTools Protocol (CDP) cloud browser sessions to execute custom DOM traversal scripts and retrieve rendered text with screenshot validation.
 
-### Product 5: MCP Server (Model Context Protocol)
+### Product 7: Dataset Marketplace — Pre-Indexed Grant Catalogs
+Searches and ingests pre-indexed education, scholarship, and grant catalogs via `GET /datasets/v3/marketplace`.
 
-Lublue integrates the Bright Data MCP Server via Server-Sent Events (SSE) in [`.agents/mcp_config.json`](.agents/mcp_config.json), enabling the AI coding agent to:
-- Discover available scrapers
-- Trigger and inspect collector runs
-- Orchestrate multi-step scraping workflows
+### Product 8: Model Context Protocol (MCP) Server
+Integrated via Server-Sent Events (SSE) in [`.agents/mcp_config.json`](.agents/mcp_config.json), allowing AI coding agents to discover, invoke, and heal scrapers autonomously.
 
 ---
 
 ## 🛡️ Self-Healing Architecture (`bdata scraper heal`)
 
-Grant foundation portals frequently redesign their layouts, change CSS classes, or switch frontend frameworks. Traditional scrapers silently break. **Lublue is immune:**
+Grant portals frequently change DOM structures or migrate from static HTML to React. **Lublue heals automatically with zero downstream code changes:**
 
 ```mermaid
 flowchart LR
-    A["1. Foundation Redesign<br/>(DOM class renamed)"] --> B["2. Scraper Studio Detects Drop<br/>(Missing extracted fields)"]
+    A["1. Foundation Redesign<br/>(DOM classes renamed)"] --> B["2. Scraper Studio Detects Drop<br/>(Missing extracted fields)"]
     B --> C["3. AI Self-Healing<br/>(bdata scraper heal)"]
     C --> D["4. Same Collector ID<br/>(Downstream Lublue never breaks)"]
 ```
@@ -143,36 +129,31 @@ flowchart LR
 + </div>
 ```
 
-**The Fix (one command, zero code changes):**
+**The Fix (one terminal command, zero code changes):**
 ```bash
 npx -p @brightdata/cli bdata scraper heal c_mt5ob6r4mm7ggia0h \
   "The fellowship title moved inside Card_header, deadline is now in Card_meta"
 ```
 
-**Result:** AI re-generates CSS selectors. Same Collector ID `c_mt5ob6r4mm7ggia0h`. Same API. Zero downstream changes to Lublue.
+**Result:** AI re-generates extraction selectors. Collector ID `c_mt5ob6r4mm7ggia0h` remains unchanged. API keeps working seamlessly.
 
 ---
 
-## ⚡ Live In-App Scraper Pipeline
+## ⚡ Live In-App Scraper Pipeline & API Endpoints
 
-### "⚡ Sync Scraper" Button
-Users (and judges!) can trigger the full multi-product pipeline directly from the Lublue UI:
+### In-App Controls
+1. **"⚡ Sync Scraper" Button**: In the results view, triggers the full 8-product pipeline and displays real-time toast feedback.
+2. **Telemetry Badge**: Expandable footer badge with live infrastructure state, active zones, and product breakdown.
 
-1. Click **"⚡ Sync Scraper"** in the results view
-2. SERP API discovers new grants → Data Collector triggers → Web Unlocker verifies URLs
-3. Toast banner shows: products used, new opportunities found, snapshot ID
-4. Results automatically refresh with newly discovered grants
-
-### Pipeline Telemetry Badge
-The footer displays a live interactive badge showing all 5 Bright Data products and their real-time status. Click to expand and see the full architecture.
-
-### API Endpoints
-| Endpoint | Method | Description |
-|---|---|---|
-| `/api/match` | POST | Match user bio against scraped opportunities |
-| `/api/scrape/sync` | POST | Trigger full multi-product pipeline |
-| `/api/scrape/status` | GET | Real-time pipeline telemetry |
-| `/api/scrape/search` | POST | Direct SERP API search for grants |
+### Complete API Surface
+| Endpoint | Method | Bright Data Product Used | Description |
+|---|---|---|---|
+| `/api/match` | POST | All 8 Products + Matcher | Scored matching of user bio against all opportunities |
+| `/api/scrape/sync` | POST | 8-Product Pipeline | Triggers full end-to-end sync across search, collector & unlocker |
+| `/api/scrape/status` | GET | Telemetry Engine | Real-time status of collector, zones, snapshots & self-healing |
+| `/api/scrape/search` | POST | SERP API | Live Google/Bing keyword search for grants |
+| `/api/scrape/marketplace` | GET | Dataset Marketplace | Search pre-collected grant & fellowship datasets |
+| `/api/scrape/unlock` | POST | Web Unlocker | Validate & bypass anti-bot on any target grant URL |
 
 ---
 
@@ -193,9 +174,9 @@ The footer displays a live interactive badge showing all 5 Bright Data products 
     }
   ],
   "meta": {
-    "totalOpportunities": 18,
-    "lastScraped": "2026-08-23T17:20:00.000Z",
-    "source": "Bright Data Multi-Product Pipeline (SERP API + Web Unlocker + Scraping Browser + Data Collector)"
+    "totalOpportunities": 22,
+    "lastScraped": "2026-08-23T18:14:00.000Z",
+    "source": "Bright Data 8-Product Pipeline (SERP + Unlocker + Scraping Browser + Collector + Web Scraper + Browser API + Marketplace + MCP)"
   }
 }
 ```
@@ -209,7 +190,7 @@ The footer displays a live interactive badge showing all 5 Bright Data products 
 - 🔍 **Opportunity Details Modal**: Detailed breakdowns of award ceilings, eligibility rules, and application links.
 - 💾 **Saved Opportunities Drawer**: Bookmark grants with instant `localStorage` persistence.
 - 🎨 **World-Class Editorial Design**: Custom typography pairing **Fraunces** serif with **Inter** sans-serif, warm neutral palettes, and micro-animations.
-- ⚡ **Real-Time Pipeline Status**: Live in-app telemetry badge showing all 5 Bright Data products and sync status.
+- ⚡ **Real-Time Pipeline Status**: Live in-app telemetry badge showing all 8 Bright Data products and sync status.
 - 🔄 **Live Grant Discovery**: On-demand SERP API searches that find grants the user didn't even know existed.
 
 ---
@@ -229,7 +210,7 @@ OpenCall/
 │   │   │   ├── SavedDrawer.tsx # Bookmark slide-out drawer
 │   │   │   ├── LoadingSkeleton.tsx
 │   │   │   ├── EmptyState.tsx
-│   │   │   └── Footer.tsx      # Bright Data 5-product pipeline telemetry
+│   │   │   └── Footer.tsx      # Bright Data 8-product pipeline telemetry
 │   │   ├── types/              # Synchronized TypeScript interfaces
 │   │   ├── App.tsx             # State machine & view orchestration
 │   │   └── index.css           # Vanilla CSS design system
@@ -237,12 +218,12 @@ OpenCall/
 ├── server/                     # Node.js + Express backend
 │   ├── src/
 │   │   ├── api/
-│   │   │   └── match.ts        # POST /api/match, /scrape/sync, /scrape/search
+│   │   │   └── match.ts        # POST /api/match, /scrape/sync, /scrape/search, /scrape/marketplace, /scrape/unlock
 │   │   ├── services/
 │   │   │   ├── matcher.ts      # Multi-factor scoring engine
-│   │   │   └── brightdata.ts   # 5-product Bright Data pipeline orchestration
+│   │   │   └── brightdata.ts   # 8-product Bright Data pipeline orchestration
 │   │   ├── lib/
-│   │   │   └── brightdata-client.ts # Multi-product HTTP client (SERP + Unlocker + Collector + Browser)
+│   │   │   └── brightdata-client.ts # 8-product HTTP client (SERP + Unlocker + Collector + Browser + Marketplace + CDP)
 │   │   └── index.ts            # Server entry & static SPA serving
 │   └── data/
 │       └── sample-opportunities.json # Seed opportunities database

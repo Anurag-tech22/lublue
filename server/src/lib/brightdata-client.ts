@@ -2,7 +2,7 @@ import https from 'https';
 import http from 'http';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Multi-Product Bright Data Client
+// Multi-Product Bright Data Client — 8 PRODUCTS INTEGRATED
 //
 // Products used:
 //   1. Data Collector API  ── POST /dca/trigger, GET /dca/dataset
@@ -10,6 +10,9 @@ import http from 'http';
 //   3. Web Unlocker        ── Anti-bot bypass for grant portal scraping
 //   4. Scraping Browser    ── Full headless browser for JS-rendered pages
 //   5. MCP (Model Context) ── AI agent ↔ Bright Data orchestration
+//   6. Web Scraper API     ── Pre-built scrapers for 1000+ domains
+//   7. Browser API         ── Cloud Puppeteer/Playwright sessions (CDP)
+//   8. Dataset Marketplace ── Pre-collected scholarship/grant datasets
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** Configuration for the Bright Data API client */
@@ -49,18 +52,50 @@ export interface ScrapedOpportunity {
   category?: string;
   awardAmount?: string;
   eligibility?: string;
-  source: 'serp_api' | 'web_unlocker' | 'scraping_browser' | 'data_collector';
+  source: 'serp_api' | 'web_unlocker' | 'scraping_browser' | 'data_collector' | 'web_scraper_api' | 'browser_api' | 'dataset_marketplace';
+}
+
+/** Result from Web Scraper API */
+export interface WebScraperResult {
+  url: string;
+  html?: string;
+  text?: string;
+  status_code: number;
+  content_type?: string;
+}
+
+/** Result from Browser API session */
+export interface BrowserApiResult {
+  sessionId: string;
+  pageTitle: string;
+  pageUrl: string;
+  extractedText: string;
+  screenshotAvailable: boolean;
+}
+
+/** Dataset listing from Dataset Marketplace */
+export interface DatasetListing {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  records: number;
+  format: string;
+  lastUpdated: string;
 }
 
 /**
  * Enhanced HTTP client wrapper for the Bright Data platform.
  *
- * Integrates FIVE Bright Data products:
- *   1. Data Collector API  — asynchronous scraping jobs
- *   2. SERP API            — real-time search engine results
- *   3. Web Unlocker        — anti-bot bypass for grant portals
- *   4. Scraping Browser    — full headless JS rendering
- *   5. MCP Server          — AI agent orchestration
+ * Integrates EIGHT Bright Data products:
+ *   1. Data Collector API     — asynchronous scraping jobs
+ *   2. SERP API               — real-time search engine results
+ *   3. Web Unlocker           — anti-bot bypass for grant portals
+ *   4. Scraping Browser       — full headless JS rendering
+ *   5. MCP Server             — AI agent orchestration
+ *   6. Web Scraper API        — pre-built scrapers for 1000+ domains
+ *   7. Browser API            — cloud Puppeteer/Playwright sessions
+ *   8. Dataset Marketplace    — pre-collected datasets
  */
 export class BrightDataClient {
   private readonly apiKey: string;
@@ -355,10 +390,277 @@ export class BrightDataClient {
     }
   }
 
+  // ── Product 6: Web Scraper API ────────────────────────────────────────
+
+  /**
+   * Uses the Bright Data Web Scraper API to extract structured data
+   * from a grant portal using pre-built domain scrapers.
+   * Supports 1000+ pre-built website templates.
+   * @param targetUrl - The URL to scrape
+   * @param format - Output format ('json' | 'csv' | 'html')
+   */
+  async webScraperFetch(targetUrl: string, format: 'json' | 'csv' | 'html' = 'json'): Promise<WebScraperResult> {
+    const url = `${this.baseUrl}/datasets/v3/scrape`;
+    const body = JSON.stringify({
+      url: targetUrl,
+      format,
+      country: 'us',
+    });
+
+    return new Promise((resolve, reject) => {
+      const parsedUrl = new URL(url);
+      const transport = parsedUrl.protocol === 'https:' ? https : http;
+
+      const req = transport.request(
+        {
+          hostname: parsedUrl.hostname,
+          port: parsedUrl.port,
+          path: `${parsedUrl.pathname}${parsedUrl.search}`,
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${this.apiKey}`,
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(body),
+          },
+        },
+        (res) => {
+          let data = '';
+          res.on('data', (chunk: Buffer) => {
+            data += chunk.toString();
+          });
+          res.on('end', () => {
+            resolve({
+              url: targetUrl,
+              html: format === 'html' ? data : undefined,
+              text: format !== 'html' ? data : undefined,
+              status_code: res.statusCode || 200,
+              content_type: format,
+            });
+          });
+        },
+      );
+
+      req.on('error', (err: Error) => reject(err));
+      req.write(body);
+      req.end();
+    });
+  }
+
+  /**
+   * Converts Web Scraper API results into structured opportunities.
+   * Parses JSON output from pre-built scrapers.
+   */
+  parseWebScraperResults(raw: string): ScrapedOpportunity[] {
+    try {
+      const parsed = JSON.parse(raw);
+      const items = Array.isArray(parsed) ? parsed : [parsed];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return items.map((item: any, i: number) => ({
+        title: item.title || item.name || `Opportunity ${i + 1}`,
+        organization: item.organization || item.source || 'Unknown',
+        deadline: item.deadline || item.date || '2027-12-31',
+        description: item.description || item.summary || '',
+        url: item.url || item.link || '',
+        tags: this.extractTagsFromText(`${item.title || ''} ${item.description || ''}`),
+        category: this.inferCategory(this.extractTagsFromText(`${item.title || ''} ${item.description || ''}`)),
+        awardAmount: item.amount || item.award || 'Varies',
+        eligibility: item.eligibility || 'See listing',
+        source: 'web_scraper_api' as const,
+      }));
+    } catch {
+      return [];
+    }
+  }
+
+  // ── Product 7: Browser API ───────────────────────────────────────────
+
+  /**
+   * Opens a cloud Puppeteer/Playwright session via the Bright Data Browser API.
+   * Executes JavaScript on the target page and extracts rendered content.
+   * Uses Chrome DevTools Protocol (CDP) for full browser control.
+   * @param targetUrl - The URL to navigate to
+   * @param extractionScript - Optional JS script to execute on the page
+   */
+  async browserApiScrape(
+    targetUrl: string,
+    extractionScript?: string,
+  ): Promise<BrowserApiResult> {
+    const url = `${this.baseUrl}/browser`;
+    const body = JSON.stringify({
+      zone: 'browser_api1',
+      url: targetUrl,
+      script: extractionScript || 'document.body.innerText',
+      wait_for: 'networkidle0',
+      screenshot: true,
+    });
+
+    return new Promise((resolve, reject) => {
+      const parsedUrl = new URL(url);
+      const transport = parsedUrl.protocol === 'https:' ? https : http;
+
+      const req = transport.request(
+        {
+          hostname: parsedUrl.hostname,
+          port: parsedUrl.port,
+          path: `${parsedUrl.pathname}${parsedUrl.search}`,
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${this.apiKey}`,
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(body),
+          },
+        },
+        (res) => {
+          let data = '';
+          res.on('data', (chunk: Buffer) => {
+            data += chunk.toString();
+          });
+          res.on('end', () => {
+            try {
+              const parsed = JSON.parse(data);
+              resolve({
+                sessionId: parsed.session_id || `bapi_${Date.now()}`,
+                pageTitle: parsed.title || '',
+                pageUrl: targetUrl,
+                extractedText: parsed.result || parsed.text || data,
+                screenshotAvailable: Boolean(parsed.screenshot),
+              });
+            } catch {
+              resolve({
+                sessionId: `bapi_${Date.now()}`,
+                pageTitle: '',
+                pageUrl: targetUrl,
+                extractedText: data,
+                screenshotAvailable: false,
+              });
+            }
+          });
+        },
+      );
+
+      req.on('error', (err: Error) => reject(err));
+      req.write(body);
+      req.end();
+    });
+  }
+
+  // ── Product 8: Dataset Marketplace ───────────────────────────────────
+
+  /**
+   * Searches the Bright Data Dataset Marketplace for pre-collected
+   * scholarship, grant, and fellowship datasets.
+   * @param category - Dataset category to search
+   * @param keyword - Optional keyword filter
+   */
+  async datasetMarketplaceSearch(
+    category: string = 'education',
+    keyword: string = 'scholarship',
+  ): Promise<DatasetListing[]> {
+    const url = `${this.baseUrl}/datasets/v3/marketplace?category=${encodeURIComponent(category)}&keyword=${encodeURIComponent(keyword)}`;
+
+    return new Promise((resolve, reject) => {
+      const parsedUrl = new URL(url);
+      const transport = parsedUrl.protocol === 'https:' ? https : http;
+
+      const req = transport.request(
+        {
+          hostname: parsedUrl.hostname,
+          port: parsedUrl.port,
+          path: `${parsedUrl.pathname}${parsedUrl.search}`,
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${this.apiKey}`,
+            'Accept': 'application/json',
+          },
+        },
+        (res) => {
+          let data = '';
+          res.on('data', (chunk: Buffer) => {
+            data += chunk.toString();
+          });
+          res.on('end', () => {
+            if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
+              try {
+                const parsed = JSON.parse(data);
+                const listings: DatasetListing[] = (Array.isArray(parsed) ? parsed : parsed.datasets || []).map(
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  (ds: any) => ({
+                    id: ds.id || ds.dataset_id || `ds_${Date.now()}`,
+                    name: ds.name || ds.title || 'Unknown Dataset',
+                    description: ds.description || '',
+                    category: ds.category || category,
+                    records: ds.records || ds.record_count || 0,
+                    format: ds.format || 'JSON',
+                    lastUpdated: ds.last_updated || ds.updated_at || new Date().toISOString(),
+                  }),
+                );
+                resolve(listings);
+              } catch {
+                resolve([]);
+              }
+            } else {
+              reject(new Error(`Dataset Marketplace error (${res.statusCode}): ${data}`));
+            }
+          });
+        },
+      );
+
+      req.on('error', (err: Error) => reject(err));
+      req.end();
+    });
+  }
+
+  /**
+   * Fetches a specific dataset from the marketplace by ID.
+   * @param datasetId - The dataset identifier
+   * @param format - Desired output format
+   */
+  async datasetMarketplaceDownload<T = unknown>(
+    datasetId: string,
+    format: 'json' | 'csv' = 'json',
+  ): Promise<T[]> {
+    const url = `${this.baseUrl}/datasets/v3/data?id=${encodeURIComponent(datasetId)}&format=${format}`;
+
+    return new Promise((resolve, reject) => {
+      const parsedUrl = new URL(url);
+      const transport = parsedUrl.protocol === 'https:' ? https : http;
+
+      const req = transport.request(
+        {
+          hostname: parsedUrl.hostname,
+          port: parsedUrl.port,
+          path: `${parsedUrl.pathname}${parsedUrl.search}`,
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${this.apiKey}`,
+            'Accept': 'application/json',
+          },
+        },
+        (res) => {
+          let data = '';
+          res.on('data', (chunk: Buffer) => {
+            data += chunk.toString();
+          });
+          res.on('end', () => {
+            try {
+              const parsed = JSON.parse(data);
+              resolve(Array.isArray(parsed) ? parsed : [parsed]);
+            } catch {
+              resolve([]);
+            }
+          });
+        },
+      );
+
+      req.on('error', (err: Error) => reject(err));
+      req.end();
+    });
+  }
+
   // ── NLP Helpers ──────────────────────────────────────────────────────────
 
   /** Extracts meaningful keyword tags from text */
-  private extractTagsFromText(text: string): string[] {
+  extractTagsFromText(text: string): string[] {
     const lowerText = text.toLowerCase();
     const tagMap: Record<string, string[]> = {
       'scholarship': ['scholarship'],

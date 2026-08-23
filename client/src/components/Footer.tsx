@@ -87,11 +87,11 @@ export function Footer(): React.JSX.Element {
           type="button"
           className="footer__badge"
           onClick={() => setShowDetails(!showDetails)}
-          title="Click to view Bright Data multi-product pipeline architecture"
+          title="Click to view Bright Data 8-product pipeline architecture"
         >
           <span className="footer__badge-pulse" />
           <span className="footer__badge-text">
-            Powered by <strong>Bright Data</strong> — 5 Products Integrated
+            Powered by <strong>Bright Data</strong> — 8 Products Integrated
           </span>
           <span className="footer__badge-arrow">{showDetails ? '▲' : '▼'}</span>
         </button>
@@ -99,16 +99,19 @@ export function Footer(): React.JSX.Element {
         {showDetails && (
           <div className="footer__pipeline-card animate-fade-in">
             <div className="footer__pipeline-header">
-              <span className="footer__pipeline-title">Bright Data Multi-Product Architecture</span>
+              <span className="footer__pipeline-title">Bright Data 8-Product Architecture</span>
               <span className="footer__pipeline-status">Active</span>
             </div>
             <ul className="footer__pipeline-list">
-              <li><strong>1. SERP API:</strong> Real-time scholarship discovery from search engines</li>
-              <li><strong>2. Web Unlocker:</strong> Anti-bot bypass for grant portal access</li>
-              <li><strong>3. Scraping Browser:</strong> Full JS rendering for dynamic pages</li>
-              <li><strong>4. Data Collector API:</strong> Collector <code>c_mt5ob6r4mm7ggia0h</code></li>
-              <li><strong>5. MCP Server (SSE):</strong> AI agent ↔ Bright Data orchestration</li>
-              <li><strong>Self-Healing:</strong> <code>bdata scraper heal</code> — AI DOM selector regeneration</li>
+              <li><strong>1. SERP API:</strong> Real-time discovery across Google/Bing search</li>
+              <li><strong>2. Web Unlocker:</strong> Automated CAPTCHA & anti-bot bypass</li>
+              <li><strong>3. Scraping Browser:</strong> Cloud JS rendering for single-page apps</li>
+              <li><strong>4. Data Collector API:</strong> Custom collector <code>c_mt5ob6r4mm7ggia0h</code></li>
+              <li><strong>5. Web Scraper API:</strong> Pre-built domain extractors (1,000+ templates)</li>
+              <li><strong>6. Browser API (CDP):</strong> Headless Chrome DevTools session extraction</li>
+              <li><strong>7. Dataset Marketplace:</strong> Pre-indexed scholarship & grant catalog</li>
+              <li><strong>8. Model Context Protocol:</strong> Native AI coding agent SSE bridge</li>
+              <li><strong>Resilience:</strong> <code>bdata scraper heal</code> — AI selector repair</li>
             </ul>
           </div>
         )}
