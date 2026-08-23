@@ -27,7 +27,7 @@ As a student and developer, I know how frustrating it is to find research grants
 **I built Lublue to make funding discovery simple:**
 1. You describe your background, career stage, and what research you want to fund.
 2. The backend uses an **8-product Bright Data web scraping engine** to extract and verify live grant opportunities from philanthropic portals and search engines.
-3. Our matching engine scores each grant from 0 to 100 and explains *why* it matches your profile, providing deadlines, award amounts, and direct application links in under 50 milliseconds.
+3. The matching engine scores each grant from 0 to 100 and explains *why* it matches your profile, providing deadlines, award amounts, and direct application links in under 50 milliseconds.
 
 ```mermaid
 graph LR
@@ -39,9 +39,9 @@ graph LR
 
 ---
 
-## 🛠️ How We Used Bright Data & Solved Real Scraping Challenges
+## 🛠️ How I Used Bright Data & Solved Real Scraping Challenges
 
-During this hackathon, we built a production-grade scraping pipeline using **8 Bright Data products** to solve the hardest problems in web data collection:
+During this hackathon, I built a production-grade scraping pipeline using **8 Bright Data products** to solve the hardest problems in web data collection:
 
 ```mermaid
 flowchart TB
@@ -70,19 +70,19 @@ flowchart TB
 
 ### 1. Dynamic JavaScript Rendering (React Single-Page Apps)
 * **Problem:** Foundation portals like Schmidt Sciences render grant tables with client-side React. Standard HTTP scrapers only see empty HTML shells (`<div id="root"></div>`).
-* **Solution:** We used a **Browser Worker** in **Scraper Studio** and the **Scraping Browser**. The cloud browser waits for DOM hydration (`wait('h1', { timeout: 30000 })`) before extracting structured records.
+* **Solution:** I used a **Browser Worker** in **Scraper Studio** and the **Scraping Browser**. The cloud browser waits for DOM hydration (`wait('h1', { timeout: 30000 })`) before extracting structured records.
 
 ### 2. Bypassing Bot Detection on Foundation Portals
 * **Problem:** Portals like Rockefeller and MacArthur protect their directories with Cloudflare bot mitigation, blocking automated requests with 403s or CAPTCHAs.
-* **Solution:** We routed requests through **Bright Data Web Unlocker** (`POST /request`). It automatically rotates residential IPs, handles TLS fingerprinting, and solves CAPTCHAs in the background.
+* **Solution:** I routed requests through **Bright Data Web Unlocker** (`POST /request`). It automatically rotates residential IPs, handles TLS fingerprinting, and solves CAPTCHAs in the background.
 
 ### 3. Real-Time Discovery Across Search Engines
 * **Problem:** Scraping a static list of URLs misses newly announced funding calls.
-* **Solution:** We connected the **SERP API** (`client.serpSearch()`) to query Google and Bing for live grant calls (e.g., `"STEM fellowship 2027 open application"`), parsing results into structured `Opportunity` objects.
+* **Solution:** I connected the **SERP API** (`client.serpSearch()`) to query Google and Bing for live grant calls (e.g., `"STEM fellowship 2027 open application"`), parsing results into structured `Opportunity` objects.
 
 ### 4. Self-Healing Broken Scrapers
 * **Problem:** Websites frequently change CSS classes or redesign their layout, breaking scrapers silently.
-* **Solution:** We used **`bdata scraper heal`**. Instead of manually rewriting code, one terminal command prompts AI to analyze the new DOM and repair the selectors with zero downtime.
+* **Solution:** I used **`bdata scraper heal`**. Instead of manually rewriting code, one terminal command prompts AI to analyze the new DOM and repair the selectors with zero downtime.
 
 ---
 
