@@ -15,7 +15,7 @@
 ### 🔗 Live Production URL: [Lublue — Your Story, Matched to Opportunity](https://lublue.onrender.com/)
 ### 🎥 Video Demo: [Watch Hackathon Demo on YouTube](https://youtu.be/hOxwj9xLGHE?si=zZ-Dzen8eS4lxkR8)
 
-[🚀 Live Demo](https://lublue.onrender.com/) &bull; [🎥 Video Demo](https://youtu.be/hOxwj9xLGHE?si=zZ-Dzen8eS4lxkR8) &bull; [🏗️ Architecture](#-system-architecture) &bull; [🔥 Bright Data Integration](#-how-i-used-bright-data) &bull; [🛡️ Self-Healing](#-self-healing-scrapers-in-action) &bull; [📑 API Reference](#-api-endpoints)
+[🚀 Live Demo](https://lublue.onrender.com/) &bull; [🎥 Video Demo](https://youtu.be/hOxwj9xLGHE?si=zZ-Dzen8eS4lxkR8) &bull; [📸 Screenshots](#-application-screenshots) &bull; [🏗️ Architecture](#-system-architecture) &bull; [🔥 Bright Data Integration](#-how-i-used-bright-data) &bull; [🛡️ Self-Healing](#-self-healing-scrapers-in-action) &bull; [📑 API Reference](#-api-endpoints)
 
 </div>
 
@@ -236,6 +236,27 @@ npx -p @brightdata/cli bdata scraper heal c_mt5ob6r4mm7ggia0h \
 - **Saved Grants Drawer**: Bookmarks opportunities with instant `localStorage` persistence.
 - **Category Filters**: Instant filtering across **AI & Tech**, **Health & Bio**, **Climate**, **Social Impact**, and **Fellowships**.
 - **Responsive Layout**: Designed and tested across mobile, tablet, and desktop screens.
+
+---
+
+## 📸 Application Screenshots
+
+<div align="center">
+
+### 1. Researcher Bio & Areas of Interest Matching Form
+<img src="docs/screenshots/01-bio-input-form.png" alt="Bio & Areas of Interest Input Form" width="850"/>
+
+<br/><br/>
+
+### 2. Ranked Matches & Real-Time Relevance Scores
+<img src="docs/screenshots/02-matched-opportunities.png" alt="Matched Opportunities Grid with Relevance Badges" width="850"/>
+
+<br/><br/>
+
+### 3. Opportunity Details Modal & Direct Application
+<img src="docs/screenshots/03-opportunity-details-modal.png" alt="Opportunity Details Modal with Award and Eligibility" width="850"/>
+
+</div>
 
 ---
 
