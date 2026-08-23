@@ -93,7 +93,7 @@ export function Footer(): React.JSX.Element {
           </a>
         ))}
       </nav>
-      <p className="footer__copy">&copy; {new Date().getFullYear()} Lublue &bull; Built for the Bright Data Hackathon</p>
+      <p className="footer__copy">&copy; {new Date().getFullYear()} Lublue</p>
     </footer>
   );
 }
