@@ -12,7 +12,9 @@
   <strong>An AI-powered academic funding & grant discovery platform driven by an 8-product Bright Data web scraping ecosystem, self-healing DOM selectors, and explainable semantic matching.</strong>
 </p>
 
-[Explore Live Demo](https://lublue.onrender.com/) &bull; [Architecture](#-system-architecture) &bull; [Bright Data Suite](#-bright-data-8-product-ecosystem) &bull; [Self-Healing Engine](#-self-healing-engine-bdata-scraper-heal) &bull; [API Specs](#-api-specification)
+### 🔗 Live Production URL: [Lublue — Your Story, Matched to Opportunity](https://lublue.onrender.com/)
+
+[🚀 Explore Live Demo](https://lublue.onrender.com/) &bull; [🏗️ Architecture](#-system-architecture) &bull; [🔥 Bright Data Suite](#-bright-data-8-product-ecosystem) &bull; [🛡️ Self-Healing Engine](#-self-healing-engine-bdata-scraper-heal) &bull; [📑 API Specs](#-api-specification)
 
 </div>
 
