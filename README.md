@@ -1,21 +1,24 @@
-# Lublue — Your Story, Matched to Opportunity
-
 <div align="center">
 
-[![Live Production](https://img.shields.io/badge/Live%20Production-lublue.onrender.com-0052FF?style=for-the-badge&logo=render&logoColor=white)](https://lublue.onrender.com/)
+# 🎓 Lublue — Your Story, Matched to Opportunity
+
+**An intelligent academic funding discovery platform powered by Bright Data's multi-product web scraping suite, AI self-healing selectors, and explainable semantic matching.**
+
+<br/>
+
+[![Live Production](https://img.shields.io/badge/🚀%20Live%20App-lublue.onrender.com-0052FF?style=for-the-badge&logo=render&logoColor=white)](https://lublue.onrender.com/)
+[![Video Demo](https://img.shields.io/badge/🎥%20Video%20Demo-YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/hOxwj9xLGHE?si=zZ-Dzen8eS4lxkR8)
 [![Bright Data](https://img.shields.io/badge/Bright%20Data-8%20Products%20Integrated-FF7A45?style=for-the-badge&logo=databricks&logoColor=white)](https://brightdata.com/)
-[![Hackathon](https://img.shields.io/badge/Hackathon-Into%20the%20Scrape--Verse-7928CA?style=for-the-badge&logo=hackathebox&logoColor=white)](https://wemakedevs.org/hackathons/scrape-verse)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0%20Strict-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
-<p align="center">
-  <strong>An intelligent academic funding discovery platform built with Bright Data's web scraping tools, self-healing selectors, and explainable semantic matching.</strong>
-</p>
+<br/><br/>
 
-### 🔗 Live Production URL: [Lublue — Your Story, Matched to Opportunity](https://lublue.onrender.com/)
-### 🎥 Video Demo: [Watch Hackathon Demo on YouTube](https://youtu.be/hOxwj9xLGHE?si=zZ-Dzen8eS4lxkR8)
+### [🌐 Launch Live Application](https://lublue.onrender.com/) &nbsp;&bull;&nbsp; [▶️ Watch Demo on YouTube](https://youtu.be/hOxwj9xLGHE?si=zZ-Dzen8eS4lxkR8)
 
-[🚀 Live Demo](https://lublue.onrender.com/) &bull; [🎥 Video Demo](https://youtu.be/hOxwj9xLGHE?si=zZ-Dzen8eS4lxkR8) &bull; [📸 Screenshots](#-application-screenshots) &bull; [🏗️ Architecture](#-system-architecture) &bull; [🔥 Bright Data Integration](#-how-i-used-bright-data) &bull; [🛡️ Self-Healing](#-self-healing-scrapers-in-action) &bull; [📑 API Reference](#-api-endpoints)
+<br/>
+
+[📸 Screenshots](#-application-screenshots) &bull; [🏗️ Architecture](#-system-architecture) &bull; [🔥 Bright Data Integration](#-how-i-used-bright-data--solved-real-scraping-challenges) &bull; [🛡️ Self-Healing](#-self-healing-scrapers-in-action) &bull; [📑 API Reference](#-api-endpoints) &bull; [🚀 Quick Start](#-getting-started-locally)
 
 </div>
 
